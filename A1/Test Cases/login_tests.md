@@ -16,35 +16,58 @@ test_tickets = [
 
 **Test Case R1.1 - If the user hasn't logged in, show the login page**
 
-//TODO
+Mocking:
+
+- None
+
+Actions:
+
+- open /logout (to invalid any logged-in sessions may exist)
+- open /login
+- validate that the current page is the login page
 
 
 **Test Case R1.2 - the login page has a message that by default says 'please login'**
 
-//TODO
+Mocking:
+
+- None
+
+Actions:
+
+- open /logout (to invalid any logged-in sessions may exist)
+- open /login
+- validate that the current page contains a #message element with text "Please login"
 
 
 **Test Case R1.3 - 	If the user has logged in, redirect to the user profile page**
 
 Mocking:
 
--Mock backend.get_user to return a test_user instance
+- Mock backend.get_user to return a test_user instance
 
 Actions:
 
--open /logout (to invalid any logged-in sessions may exist)
--open /login
--enter test_user's email into element #email
--enter test_user's password into element #password
--click element input[type="submit"]
--open /login again
--validate that current page contains #welcome-header element
+- open /logout (to invalid any logged-in sessions may exist)
+- open /login
+- enter test_user's email into element #email
+- enter test_user's password into element #password
+- click element input[type="submit"]
+- open /login again
+- validate that current page contains #welcome-header element
 
 
 **Test Case R1.4 - The login page provides a login form which requests two fields: email and passwords**
 
-//TODO
+Mocking:
 
+- None
+
+Actions:
+
+- open /logout (to invalid any logged-in sessions may exist)
+- open /login
+- validate that the current page contains two required input fields with id's #email and #password
 
 **Test Case R1.5 - The login form can be submitted as a POST request to the current URL (/login)**
 
