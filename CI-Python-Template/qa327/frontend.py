@@ -13,7 +13,7 @@ The html templates are stored in the 'templates' folder.
 @app.route('/register', methods=['GET'])
 def register_get():
     # templates are stored in the templates folder
-    return render_template('register.html', message='')
+    return render_template('register.html', message='OK')
 
 
 @app.route('/register', methods=['POST'])
