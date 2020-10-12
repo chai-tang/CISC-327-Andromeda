@@ -1,7 +1,7 @@
 #Test Cases for /sell
 
 Test Data:
-'''
+```
 test_user = User(
     email='test_frontend@test.com',
     name='test_frontend',
@@ -42,7 +42,7 @@ invalid_price = [
 valid_date = 20211230
 
 invalid_date = '2021 12 30'
-'''
+```
 
 **Test Case R4.1 - The name of the ticket must be alphanumeric with space allowed only if it is not the first character**
 Mocking:
