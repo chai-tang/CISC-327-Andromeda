@@ -1,7 +1,7 @@
 # Test Cases for /
 
 Test Data:
-'''
+''''
 test_user = User(
     email='test_frontend@test.com',
     name='test_frontend',
@@ -12,7 +12,7 @@ test_tickets = [
     {'name': 't1', 'quantity': 1, 'contact': 'seller@test.com', 'price': 50},
 	{'name': 't2', 'quantity': 1, 'contact': 'test_frontend@test.com', 'price':50}
 ]
-'''
+''''
 **Test Case R3.1 - If the user is not logged in, redirect to login page**
 Mocking:
 - None
