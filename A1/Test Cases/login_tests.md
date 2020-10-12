@@ -12,6 +12,50 @@ test_tickets = [
     {'name': 't1', 'price': '100'}
 ]
 
+valid_email = 'valid_email@test.com'
+
+valid_password = '123ABCxyz*'
+
+invalid_emails = [
+    'has space@test.com',
+    '.startswithperiod@test.com',
+    'consecutive..periods@test.com',
+    'has\backslash@test.com',
+    'has"double"quotes@test.com',
+    'wacky)(brackets@test.com',
+    '%special&chars#!*^$@gmail.com',
+    '😘😘😘@test.com',
+    'veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylongemail@test.com',
+    '@test.com',
+    'nodomain.com',
+    '',
+    'local@-hyphens-.com',
+    'local@$special#chars!%^&*.com',
+    'local@unscore_domain.com',
+    'local@😂😂😂.com',
+    'local@veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylongdomain.com',
+    'local@'
+]
+
+invalid_passwords = [
+    'onlylowercase',
+    'ONLYUPPERCASE',
+    '12345678',
+    '$@#!&*^',
+    'UPPERlower',
+    'UPPER123',
+    'UPPER!@#$%',
+    'lower123',
+    'lower!@#$%',
+    '1234!@#$',
+    'a',
+    '',
+    '*almostVALID*',
+    'almostVALID123',
+    '*ALMOSTVALID123*',
+    '*almostvalid123*'
+]
+
 ```
 
 **Test Case R1.1 - If the user hasn't logged in, show the login page**
@@ -54,7 +98,7 @@ Actions:
 - enter test_user's password into element #password
 - click element input[type="submit"]
 - open /login again
-- validate that current page is /
+- validate that the current page is /
 
 
 **Test Case R1.4 - The login page provides a login form which requests two fields: email and passwords**
@@ -67,9 +111,9 @@ Actions:
 
 - open /logout (to invalidate any logged-in sessions that may exist)
 - open /login
-- validate that the current page contains an input element with id #email 
+- validate that the current page contains a text input element with id #email 
 - validate that this #email element has a label with the text "Email"
-- validate that the current page contains an input element with id #password
+- validate that the current page contains a text input element with id #password
 - validate that this #password element has a label with the text "Password"
 
 **Test Case R1.5 - The login form can be submitted as a POST request to the current URL (/login)**
@@ -95,10 +139,10 @@ Actions:
 
 - open /logout (to invalidate any logged-in sessions that may exist)
 - open /login
-- validate that the current page contains an input element with id #email 
-- validate that this #email element has the required attribute
-- validate that the current page contains an input element with id #password
-- validate that this #password element has the required attribute
+- validate that the current page contains a text input element with id #email 
+- validate that this #email element has the 'required' attribute
+- validate that the current page contains a text input element with id #password
+- validate that this #password element has the 'required' attribute
 - clear all text from the elements #email and #password
 - click element input[type="submit"]
 - validate that the current page is still the /login page
@@ -114,14 +158,11 @@ Actions:
 
 - open /logout (to invalidate any logged-in sessions that may exist)
 - open /login
-- validate that the current page contains an input element with id #email
-- validate that this #email element has the attribute type="email"
 - enter an invalid email into the element #email
 - enter a valid password into the element #password
 - click element input[type="submit"]
 - validate that the current page is still the /login page
-- repeat the previous four steps with various invalid emails
-- bonus unecessarily complex solution: validate that the #email input field has attribute pattern="^([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])" or an equivalent regex
+- repeat the previous four steps with all the invalid_emails
 
 **Test Case R1.8 - Password has to meet the required complexity: minimum length 6, at least one upper case, at least one lower case, and at least one special character**
 
@@ -133,14 +174,11 @@ Actions:
 
 - open /logout (to invalidate any logged-in sessions that may exist)
 - open /login
-- validate that the current page contains an input element with id #password
-- validate that this #email element has the attribute type="password"
 - enter a valid email into the element #email
 - enter an invalid password into the element #password
 - click element input[type="submit"]
 - validate that the current page is still the /login page
-- repeat the previous four steps with various invalid passwords
-- bonus unecessarily complex solution: validate that the #password input field has attribute pattern="^((?=.{6,})(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$%^&+=]).*$)" or an equivalent regex
+- repeat the previous four steps with all the invalid_passwords
 
 
 **Test Case R1.9 - For any formatting errors, render the login page and show the message 'email/password format is incorrect.'**
@@ -151,23 +189,8 @@ Mocking:
 
 Actions:
 
-- open /logout (to invalidate any logged-in sessions that may exist)
-- open /login
-- enter an invalid email address into element #email 
-- enter a valid password into element #password
-- click element input[type="submit"]
+- after each invalid email/password test in R1.7 and R1.8:
 - validate that the current page is /login with a #message element containing the text "email/password format is incorrect."
-- reload /login
-- enter an valid email address into element #email 
-- enter an invalid password into element #password
-- click element input[type="submit"]
-- validate that the current page is /login with a #message element containing the text "email/password format is incorrect."
-- reload /login
-- enter an invalid email address into element #email 
-- enter an invalid password into element #password
-- click element input[type="submit"]
-- validate that the current page is /login with a #message element containing the text "email/password format is incorrect."
-
 
 
 **Test Case R1.10 - If email/password are correct, redirect to /**
