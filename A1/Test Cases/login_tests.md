@@ -29,6 +29,7 @@ invalid_emails = [
     '@test.com',
     'nodomain.com',
     '',
+    'local@domain',
     'local@-hyphens-.com',
     'local@$special#chars!%^&*.com',
     'local@unscore_domain.com',
@@ -139,13 +140,9 @@ Actions:
 
 - open /logout (to invalidate any logged-in sessions that may exist)
 - open /login
-- validate that the current page contains a text input element with id #email 
-- validate that this #email element has the 'required' attribute
-- validate that the current page contains a text input element with id #password
-- validate that this #password element has the 'required' attribute
-- clear all text from the elements #email and #password
-- click element input[type="submit"]
-- validate that the current page is still the /login page
+- validate that the #email element has the 'required' attribute
+- validate that the #password element has the 'required' attribute
+- (later test cases R1.7 and R1.8 will attempt empty inputs)
 
 
 **Test Case R1.7 - Email has to follow addr-spec defined in RFC 5322 (see https://en.wikipedia.org/wiki/Email_address for a human-friendly explanation)**
@@ -162,7 +159,7 @@ Actions:
 - enter a valid password into the element #password
 - click element input[type="submit"]
 - validate that the current page is still the /login page
-- repeat the previous four steps with all the invalid_emails
+- repeat the previous five steps with all the invalid_emails
 
 **Test Case R1.8 - Password has to meet the required complexity: minimum length 6, at least one upper case, at least one lower case, and at least one special character**
 
@@ -178,7 +175,7 @@ Actions:
 - enter an invalid password into the element #password
 - click element input[type="submit"]
 - validate that the current page is still the /login page
-- repeat the previous four steps with all the invalid_passwords
+- repeat the previous five steps with all the invalid_passwords
 
 
 **Test Case R1.9 - For any formatting errors, render the login page and show the message 'email/password format is incorrect.'**
