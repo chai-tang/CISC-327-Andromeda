@@ -13,7 +13,7 @@
 | For any formatting errors, render the login page and show the message 'email/password format is incorrect.' | R1.9 | Check that the login message changes whenever a formatting error occurs |
 | If email/password are correct, redirect to / | R1.10 | Check that registered users are able to login properly |
 | Otherwise, redict to /login and show message 'email/password combination incorrect' | R1.11 | Check that login fails if the wrong email/password is entered, and that the login message changes to reflect this error |
-|---------------|-----------|------------------|
+|-|-|-|
 | If the user has logged in, redirect back to the user profile page / | R2.1 | Check that already logged in users cant register again |
 | otherwise, show the user registration page | R2.2 | Check that non-logged in users are able to reach the registration page |
 | the registration page shows a registration form requesting: email, user name, password, password2 | R2.3 | Check that the required input forms exist on this page |
@@ -25,7 +25,7 @@
 | For any formatting errors, redirect back to /login and show message 'format is incorrect' | R2.9 | Ensure that the correct error message is shown when registration fails |
 | If the email already exists, show message 'this email has been ALREADY used' | R2.10 | Check that the user cannot register with an email that has already been registered |
 | If no error, create a new user, set the balance to 5000, and go back to the /login page  | R2.11 | Check that the app is able to register new users |
-|---------------|-----------|------------------|
+|-|-|-|
 | If the user is not logged in, redirect to login page | R3.1 | |
 | This page shows a header 'Hi {}'.format(user.name) | R3.2 | |
 | This page shows user balance. | R3.3 | |
@@ -36,7 +36,7 @@
 | The ticket-selling form can be posted to /sell | R3.8 | |
 | The ticket-buying form can be posted to /buy | R3.9 | |
 | The ticket-update form can be posted to /update | R3.10 | |
-|---------------|-----------|------------------|
+|-|-|-|
 | The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character. | R4.1 | |
 | The name of the ticket is no longer than 60 characters | R4.2 | |
 | The quantity of the tickets has to be more than 0, and less than or equal to 100. | R4.5 | |
@@ -44,7 +44,7 @@
 | Date must be given in the format YYYYMMDD (e.g. 20200901) | R4.7 | |
 | For any errors, redirect back to / and show an error message | R4.8 | |
 | The added new ticket information will be posted on the user profile page | R4.9 | |
-|---------------|-----------|------------------|
+|-|-|-|
 | The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character. | R5.1 | |
 | The name of the ticket is no longer than 60 characters | R5.2 | |
 | The quantity of the tickets has to be more than 0, and less than or equal to 100. | R5.3 | |
@@ -52,16 +52,16 @@
 | Date must be given in the format YYYYMMDD (e.g. 20200901) | R5.5 | |
 | The ticket of the given name must exist | R5.6 | |
 | For any errors, redirect back to / and show an error message | R5.7 | |
-|---------------|-----------|------------------|
+|-|-|-|
 | The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character. | R6.1 | |
 | The name of the ticket is no longer than 60 characters | R6.2 | |
 | The quantity of the tickets has to be more than 0, and less than or equal to 100. | R6.3 | |
 | The ticket name exists in the database and the quantity is more than the quantity requested to buy | R6.4 | |
 | The user has more balance than the ticket price * quantity  + service fee (35%) + tax (5%) | R6.5 | |
 | For any errors, redirect back to / and show an error message | R6.6 | |
-|---------------|-----------|------------------|
+|-|-|-|
 | Logout will invalid the current session and redirect to the login page. | R7.1 | 
-|---------------|-----------|------------------|
+|-|-|-|
 | For any other requests except the ones above, the system should return a 404 error | R8.1 | |
 
 
