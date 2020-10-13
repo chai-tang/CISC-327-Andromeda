@@ -4,9 +4,12 @@ Test Data:
 ```
 test_user = User(
     email='test_frontend@test.com',
-    name='test_frontend',
+    name='Test_Frontend99!',
     password=generate_password_hash('test_frontend')
 )
+
+wrong_email = 'wrong_email@test.com'
+wrong_password = 'WrongP4ss!'
 
 test_tickets = [
     {'name': 't1', 'price': '100'}
@@ -217,11 +220,11 @@ Actions:
 - open /logout (to invalidate any logged-in sessions that may exist)
 - open /login
 - enter test_user's email into element #email
-- enter an incorrect password into element #password
+- enter wrong_password into element #password
 - click element input[type="submit"]
 - validate that the current page is /login with a #message element containing the text "email/password combination incorrect"
 - reload /login
-- enter an incorrect email into element #email
+- enter wrong_email into element #email
 - enter test_user's password into element #password
 - click element input[type="submit"]
 - validate that the current page is /login with a #message element containing the text "email/password combination incorrect"

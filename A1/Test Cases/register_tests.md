@@ -4,7 +4,7 @@ Test Data:
 ```
 test_user = User(
     email='test_frontend@test.com',
-    name='test_frontend',
+    name='Test_Frontend99!',
     password=generate_password_hash('test_frontend')
 )
 
@@ -75,6 +75,12 @@ invalid_usernames = [
 new_email = 'new@test.com'
 new_name = 'mr new'
 new_password = 'New123!'
+
+new_user = User(
+    email='new@test.com',
+    name='mr new',
+    password='New123!'
+)
 
 ```
 
@@ -153,12 +159,12 @@ Actions:
 - open /logout (to invalidate any logged-in sessions that may exist)
 - open /register
 - validate that the #email, #password and #password2 elements all have the 'required' attribute
-- for each of #email, #password and #password2:
+- for each of #email and #password/#password2:
 - open /register
 - fill all other input fields with valid inputs
 - enter an invalid input into this field
 - click element input[type="submit"]
-- validate that the current page is still /register
+- validate that the current page is /login with a #message element containing the text '{} format is incorrect.'.format(the_corresponding_attribute)
 - do this for all the invalid_emails and invalid_passwords
 
 
@@ -176,7 +182,7 @@ Actions:
 - enter valid_password into the #password element
 - enter valid_password2 into the #password2 element
 - click element input[type="submit"]
-- validate that the current page is still /register
+- validate that the current page is /login with a #message element containing the text '{} format is incorrect.'.format(the_corresponding_attribute)
 
 
 **Test Case R2.7 - User name has to be non-empty, alphanumeric-only, and space allowed only if it is not the first or the last character.**
@@ -193,8 +199,7 @@ Actions:
 - fill the #email, #password and #password2 fields with valid inputs
 - enter an invalid username into the #name element
 - click element input[type='submit']
-- validate that the current page is still /register
-
+- validate that the current page is /login with a #message element containing the text '{} format is incorrect.'.format(the_corresponding_attribute)
 
 **Test Case R2.8 - User name has to be longer than 2 characters and less than 20 characters.**
 
@@ -215,8 +220,7 @@ Actions:
 - fill the #email, #password and #password2 fields with valid inputs
 - enter a username that is less than 2 characters long into the #name element
 - click element input[type='submit']
-- validate that the current page is still /register
-
+- validate that the current page is /login with a #message element containing the text '{} format is incorrect.'.format(the_corresponding_attribute)
 
 **Test Case R2.9 - For any formatting errors, redirect back to /login and show message '{} format is incorrect.'.format(the_corresponding_attribute)**
 
@@ -226,8 +230,7 @@ Mocking:
 
 Actions:
 
-- after each test case in R2.5-8 (before reloading /register):
-- validate that the current page is /login with a #message element containing the text "X format is incorrect", with X corresponding to the attribute being tested.
+- this requirement is covered in test cases R2.5-8 
 
 
 **Test Case R2.10 - If the email already exists, show message 'this email has been ALREADY used'**
@@ -251,7 +254,7 @@ Actions:
 
 Mocking:
 
-- Mock backend.get_user to return a test_user instance
+- Mock backend.get_user to return a newly created user
 - Mock backend.get_balance to return a user's balance on the / page
 
 Actions:
