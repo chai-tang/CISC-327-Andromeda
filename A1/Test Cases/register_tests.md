@@ -76,6 +76,12 @@ new_email = 'new@test.com'
 new_name = 'mr new'
 new_password = 'New123!'
 
+new_user = User(
+    email='new@test.com',
+    name='mr new',
+    password='New123!'
+)
+
 ```
 
 **Test Case R2.1 - If the user has logged in, redirect back to the user profile page /**
@@ -251,7 +257,7 @@ Actions:
 
 Mocking:
 
-- Mock backend.get_user to return a test_user instance
+- Mock backend.get_user to return a newly created user
 - Mock backend.get_balance to return a user's balance on the / page
 
 Actions:
