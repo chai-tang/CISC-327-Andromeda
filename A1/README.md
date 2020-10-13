@@ -45,20 +45,20 @@
 | For any errors, redirect back to / and show an error message | R4.8 | |
 | The added new ticket information will be posted on the user profile page | R4.9 | |
 |-|-|-|
-| The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character. | R5.1 | |
-| The name of the ticket is no longer than 60 characters | R5.2 | |
-| The quantity of the tickets has to be more than 0, and less than or equal to 100. | R5.3 | |
-| Price has to be of range [10, 100] | R5.4 | |
-| Date must be given in the format YYYYMMDD (e.g. 20200901) | R5.5 | |
-| The ticket of the given name must exist | R5.6 | |
-| For any errors, redirect back to / and show an error message | R5.7 | |
+| The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character. | R5.1 | | Ensures that ticket name is alphanumeric-only and has no leading or trailing spaces.
+| The name of the ticket is no longer than 60 characters | R5.2 | | Ensures that ticket name does not exceed maximum length.
+| The quantity of the tickets has to be more than 0, and less than or equal to 100. | R5.3 | | Ensures that the ticket quantity is in the valid range.
+| Price has to be of range [10, 100] | R5.4 | | Ensures that the ticket price is in the valid range.
+| Date must be given in the format YYYYMMDD (e.g. 20200901) | R5.5 | | Ensures that the ticket expiration date is in the valid format.
+| The ticket of the given name must exist | R5.6 | | Ensures that the ticket name exists in the database.
+| For any errors, redirect back to / and show an error message | R5.7 | | Check that an error message is displayed if any of the above requirements are not met.
 |-|-|-|
-| The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character. | R6.1 | |
-| The name of the ticket is no longer than 60 characters | R6.2 | |
-| The quantity of the tickets has to be more than 0, and less than or equal to 100. | R6.3 | |
-| The ticket name exists in the database and the quantity is more than the quantity requested to buy | R6.4 | |
-| The user has more balance than the ticket price * quantity  + service fee (35%) + tax (5%) | R6.5 | |
-| For any errors, redirect back to / and show an error message | R6.6 | |
+| The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character. | R6.1 | | Ensures that ticket name is alphanumeric-only and has no leading or trailing spaces.
+| The name of the ticket is no longer than 60 characters | R6.2 | | Ensures that ticket name does not exceed maximum length.
+| The quantity of the tickets has to be more than 0, and less than or equal to 100. | R6.3 | | Ensures that the ticket quantity is in the valid range.
+| The ticket name exists in the database and the quantity is more than the quantity requested to buy | R6.4 | | Ensures that the ticket name exists in the database and the quantity available is greater than the quantity requested.
+| The user has more balance than the ticket price * quantity  + service fee (35%) + tax (5%) | R6.5 | | Ensures that the user has enough funds available to purchase the ticket.
+| For any errors, redirect back to / and show an error message | R6.6 | | Check that an error message is displayed if any of the above requirements are not met.
 |-|-|-|
 | Logout will invalid the current session and redirect to the login page. | R7.1 | 
 |-|-|-|
