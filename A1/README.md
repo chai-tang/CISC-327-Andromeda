@@ -70,8 +70,11 @@
 All the test cases are stored in a folder called 'Test Cases'. The test cases in this folder are divided into markdown files based on the category of cases they cover. For example, the R1 /login test cases are in a folder called 'login_tests.md'. 
 
 Josh: R1 and R2 (/login and /register)
+
 Evan: R3 and R4 (/ and /sell)
+
 Alina: R5 and R6 (/update and /buy)
+
 Sam: R7 and R8 (/logout and /*)
 
 **Your understanding of how the chosen testing framework works to test the frontend, including your understandings of when and how the test cases will be running directly on GitHub.**
