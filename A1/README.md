@@ -26,24 +26,24 @@
 | If the email already exists, show message 'this email has been ALREADY used' | R2.10 | Check that the user cannot register with an email that has already been registered |
 | If no error, create a new user, set the balance to 5000, and go back to the /login page  | R2.11 | Check that the app is able to register new users |
 |-|-|-|
-| If the user is not logged in, redirect to login page | R3.1 | |
-| This page shows a header 'Hi {}'.format(user.name) | R3.2 | |
-| This page shows user balance. | R3.3 | |
-| This page shows a logout link, pointing to /logout | R3.4 | |
-| This page lists all available tickets. | R3.5 | |
-| This page contains a form that a user can submit new tickets for sell. | R3.6 | |
-| This page contains a form that a user can buy new tickets. | R3.7 | |
-| The ticket-selling form can be posted to /sell | R3.8 | |
-| The ticket-buying form can be posted to /buy | R3.9 | |
-| The ticket-update form can be posted to /update | R3.10 | |
+| If the user is not logged in, redirect to login page | R3.1 | Check that the user cannot access the page when not logged in |
+| This page shows a header 'Hi {}'.format(user.name) | R3.2 | Check that the page shows the user who they are logged in as |
+| This page shows user balance. | R3.3 | Check that the user can see their balance |
+| This page shows a logout link, pointing to /logout | R3.4 | Check that the user can log out|
+| This page lists all available tickets. | R3.5 | Ensure that content displays correctly |
+| This page contains a form that a user can submit new tickets for sell. | R3.6 | Check that there is a for for submitting new tickets |
+| This page contains a form that a user can buy new tickets. | R3.7 | Check that there is a form for buying tickets |
+| The ticket-selling form can be posted to /sell | R3.8 | Check that the selling form works |
+| The ticket-buying form can be posted to /buy | R3.9 | Check that the buying form works |
+| The ticket-update form can be posted to /update | R3.10 | Check that the user can update tickets through the selling form |
 |-|-|-|
-| The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character. | R4.1 | |
-| The name of the ticket is no longer than 60 characters | R4.2 | |
-| The quantity of the tickets has to be more than 0, and less than or equal to 100. | R4.5 | |
-| Price has to be of range [10, 100] | R4.6 | |
-| Date must be given in the format YYYYMMDD (e.g. 20200901) | R4.7 | |
-| For any errors, redirect back to / and show an error message | R4.8 | |
-| The added new ticket information will be posted on the user profile page | R4.9 | |
+| The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character. | R4.1 | Ensures the ticket name fits the requirements |
+| The name of the ticket is no longer than 60 characters | R4.2 | Ensures the ticket is not too long |
+| The quantity of the tickets has to be more than 0, and less than or equal to 100. | R4.5 | Check that there are tickets available, and that there are not too many |
+| Price has to be of range [10, 100] | R4.6 | Check that the ticket is priced correctly |
+| Date must be given in the format YYYYMMDD (e.g. 20200901) | R4.7 | Ensure that the date is formatted correctly |
+| For any errors, redirect back to / and show an error message | R4.8 | Ensure the app can handle errors |
+| The added new ticket information will be posted on the user profile page | R4.9 | Check that the new ticket is added to the list of available tickets |
 |-|-|-|
 | The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character. | R5.1 | Ensures that ticket name is alphanumeric-only and has no leading or trailing spaces. |
 | The name of the ticket is no longer than 60 characters | R5.2 | Ensures that ticket name does not exceed maximum length.|
