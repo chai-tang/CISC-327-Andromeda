@@ -18,9 +18,9 @@ Mocking:
 
 Actions:
 
-- The user visits or submit a form to /logout
+- The user visits `/logout`
 - The server invalidate any user sessions if they exist. If the user is already logged out, there are no sessions to invalidate
-- The page redirects to /login
+- The page redirects to `/login`
 
 **Test Case R7.2 - After logout, the user shouldn't be able to access restricted pages**
 
