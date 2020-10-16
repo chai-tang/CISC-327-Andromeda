@@ -60,10 +60,10 @@
 | The user has more balance than the ticket price * quantity  + service fee (35%) + tax (5%) | R6.5 | Ensures that the user has enough funds available to purchase the ticket.|
 | For any errors, redirect back to / and show an error message | R6.6 | Check that an error message is displayed if any of the above requirements are not met.|
 |-|-|-|
-| Logout will invalidate the current session and redirect to the login page | R7.1 | Invalidate all the user sessions and redirect to the login page no matter what. |
-| After logout, the user shouldn't be able to access restricted pages | R7.2 | Make sure that the restricted pages are inaccesiable, and user should not be able to buy, sell or update tickets |
+| Logout will invalidate the current session and redirect to the login page | R7.1 | Invalidate all the user sessions and redirect to the login page. |
+| After logout, the user shouldn't be able to access restricted pages | R7.2 | Make sure that the restricted pages are inaccessible, and user should not be able to buy, sell or update tickets. |
 |-|-|-|
-| For any other requests, the system should return a 404 error | R8 | Make sure that invalid paths return 404. For some special cases, the server might return 403 instead |
+| For any other requests, the system should return a 404 error | R8 | Make sure that invalid paths return 404. |
 
 
 **How did your team organize the documentations of the test cases (e.g. where did you store the test case markdown file for each team member).**
