@@ -1,14 +1,14 @@
+# This is the template we will be modifying for Assignment 2. 
+
+Additionally, the design_document.md is where we'll be putting our design document and test plan
+
+Here's the original template README:
+
 # GitHub Actions CI Template for Selenium+Flask MVC
 
 [![](https://github.com/CISC-CMPE-327/CI-Python/workflows/Python%20application/badge.svg)](https://github.com/CISC-CMPE-327/CI-Python/actions)
 
 ## Instructions: 
-
-First, clone this repo:
-```
-git clone https://github.com/CISC-CMPE-327/CI-Python
-cd CI-Python 
-```
 
 To run the application (make sure you have a python environment of 3.5+)
 
