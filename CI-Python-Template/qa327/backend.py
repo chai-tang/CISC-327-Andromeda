@@ -42,12 +42,23 @@ def register_user(email, name, password, password2):
 
     hashed_pw = generate_password_hash(password, method='sha256')
     # store the encrypted password rather than the plain password
-    new_user = User(email=email, name=name, password=hashed_pw)
+    new_user = User(email=email, name=name, password=hashed_pw, balance=0)
 
     db.session.add(new_user)
     db.session.commit()
     return None
 
+def set_balance(email,newBalance):
+    """
+    Changes the balance of the user associated with email
+    :param email: the email of the user
+    :param newBalance: the value that the user's balance will be set to
+    :return: an error message if there is any, or None if balance changes succeed
+    """
+    user = get_user(email)
+    user.balance = newBalance
+    db.session.commit()
+    return None
 
 def get_all_tickets():
     return []

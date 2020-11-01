@@ -1,6 +1,7 @@
-from flask import render_template, request, session, redirect
+from flask import render_template, request, session, redirect, url_for
 from qa327 import app
 import qa327.backend as bn
+import re
 
 """
 This file defines the front-end part of the service.
@@ -13,7 +14,7 @@ The html templates are stored in the 'templates' folder.
 @app.route('/register', methods=['GET'])
 def register_get():
     # templates are stored in the templates folder
-    return render_template('register.html', message='OK')
+    return render_template('register.html', message='Please register')
 
 
 @app.route('/register', methods=['POST'])
@@ -22,29 +23,46 @@ def register_post():
     name = request.form.get('name')
     password = request.form.get('password')
     password2 = request.form.get('password2')
-    error_message = None
+    login_message = "Please login"
 
+    # regex's to check the inputs against
+    # please note that the email pattern doesn't actually work for all RFC5322 emails
+    # if you can find a regex that does please replace it and then remove this comment, thanks
+    passwordPattern = re.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*([!-/]|[:-@])).{6,}")
+    emailPattern = re.compile("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])")
+    usernamePattern = re.compile("^[\w][\w| ]{0,18}[\w]$")
 
+    # check that both passwords match
     if password != password2:
-        error_message = "The passwords do not match"
+        return render_template('register.html', message="passwords do not match")
 
-    elif len(email) < 1:
-        error_message = "Email format error"
+    # check that the forms all match the required patterns using regular expressions
+    elif not(emailPattern.match(email)):
+        login_message="email format is incorrect"
+    elif not(passwordPattern.match(password)):
+        login_message="password format is incorrect"
+    elif not(usernamePattern.match(name)):
+        login_message="username format is incorrect"
 
-    elif len(password) < 1:
-        error_message = "Password not strong enough"
+    # if all forms are correct, attempt to register the user
     else:
         user = bn.get_user(email)
+        # if the user already exists, send an error message
         if user:
-            error_message = "User exists"
-        elif not bn.register_user(email, name, password, password2):
-            error_message = "Failed to store user info."
-    # if there is any error messages when registering new user
-    # at the backend, go back to the register page.
-    if error_message:
-        return render_template('register.html', message=error_message)
-    else:
-        return redirect('/login')
+            return render_template('register.html', message="this email has been ALREADY used")
+        # if the registration fails for some reason (register_user doesn't return none) send an error message
+        elif bn.register_user(email, name, password, password2) != None:
+            return render_template('register.html', message="failed to register new user")
+        # if no errors occur, set balance to 5000
+        else:
+            login_message = "Registration successful, please login now"
+            if bn.set_balance(email,5000) != None:
+                login_message = "Registration successful, but failed to set new balance"
+    
+    # return to login with the appropriate message
+    #render_template('login.html', message=login_message)
+    return redirect('/login')
+    #return redirect(url_for('login.html',message=login_message))
 
 
 @app.route('/login', methods=['GET'])
@@ -73,7 +91,14 @@ def login_post():
         # code 303 is to force a 'GET' request
         return redirect('/', code=303)
     else:
-        return render_template('login.html', message='login failed')
+        passwordPattern = re.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*([!-/]|[:-@])).{6,}")
+        emailPattern = re.compile("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])")
+        if (not(passwordPattern.match(password))):
+            return render_template('login.html', message='password format incorrect')
+        elif (not(emailPattern.match(email))):
+            return render_template('login.html', message='email format incorrect')
+        else:
+            return render_template('login.html', message='email/password combination incorrect')
 
 
 @app.route('/logout')
