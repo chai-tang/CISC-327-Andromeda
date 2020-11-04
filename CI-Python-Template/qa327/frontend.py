@@ -60,14 +60,18 @@ def register_post():
                 login_message = "Registration successful, but failed to set new balance"
     
     # return to login with the appropriate message
-    #render_template('login.html', message=login_message)
-    return redirect('/login')
-    #return redirect(url_for('login.html',message=login_message))
+    #return render_template('login.html', message=login_message)
+    #return redirect('/login')
+    return redirect(url_for('login_get', message=login_message))
 
 
 @app.route('/login', methods=['GET'])
 def login_get():
-    return render_template('login.html', message='Please login')
+    # if a message was passed to this function, display that as message. else, display 'Please login'
+    passed_message = request.args.get('message')
+    if passed_message == None:
+        passed_message = 'Please login'
+    return render_template('login.html', message=passed_message)
 
 
 @app.route('/login', methods=['POST'])
