@@ -154,7 +154,7 @@ def profile(user):
     # by using @authenticate, we don't need to re-write
     # the login checking code all the time for other
     # front-end portals
-    welcome-header='Hi {}'.format(user.name)
+    welcome_header='Hi {}'.format(user.name)
     balance=user.balance
     tickets = bn.get_all_tickets()
     
