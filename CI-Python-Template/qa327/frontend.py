@@ -184,8 +184,8 @@ def profile(user):
 
 @app.route('/sell',methods="post")
 @authenticate
-def sell_post(sell-name,sell-quantity,sell-price,sell-expiration-date):
-     sell-name=request.form.get('sell-name')
+def sell_post():
+    sell-name=request.form.get('sell-name')
     sell-quantity=requeest.form.get('sell-quantity')
     sell-price=request.form.get('sell-price')
     sell-expiration-date=request.form.get('sell-expiration-date')
@@ -196,7 +196,7 @@ def sell_post(sell-name,sell-quantity,sell-price,sell-expiration-date):
 
 @app.route('/buy',methods="post")
 @authenticate
-def buy_post(buy-name,buy-quantity):
+def buy_post():
     buy-name=request.form.get('buy-name')
     buy-quantity=request.form.get('buy-quantity')
     buy-error-message=bn.buy_tickets(buy-name,buy-quantity)
@@ -206,7 +206,7 @@ def buy_post(buy-name,buy-quantity):
 
 @app.route('/update',methods="post")
 @authenticate
-def update_post(update-name,update-quantity,update-price,update-expiration-date):
+def update_post():
     update-name=request.form.get('update-name')
     update-quantity=request.form.get('update-quantity')
     update-price=request.form.get('update-price')
