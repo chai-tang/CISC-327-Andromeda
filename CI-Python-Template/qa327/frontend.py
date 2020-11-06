@@ -162,13 +162,13 @@ def profile(user):
     sell-quantity=requeest.form.get('sell-quantity')
     sell-price=request.form.get('sell-price')
     sell-expiration-date=request.form.get('sell-expiration-date')
-    sell-error-message=bn.sell_tickets(sell-name,sell-quantity,sell-price,sell-expiration-date)
+    sell-error-message=bn.sell_post(sell-name,sell-quantity,sell-price,sell-expiration-date)
     if sell-error-message!=None:
         return render_template('/',message=sell-error-message)
                                
     buy-name=request.form.get('buy-name')
     buy-quantity=request.form.get('buy-quantity')
-    buy-error-message=bn.buy_tickets(buy-name,buy-quantity)
+    buy-error-message=bn.buy_post(buy-name,buy-quantity)
     if buy-error-message!=None:
         return render_template('/',message=buy-error-message)
     
@@ -176,8 +176,26 @@ def profile(user):
     update-quantity=request.form.get('update-quantity')
     update-price=request.form.get('update-price')
     update-expiration-date=request.form.get('update-expiration-date')
-    update-error-message=bn.update_tickets(update-name,update-quantity,update-price,update-expiration-date)
+    update-error-message=bn.update_post(update-name,update-quantity,update-price,update-expiration-date)
     if update-error-message!=None:
         return render_template('/',message=update-error-message)
     
     return render_template('index.html', user=user, tickets=tickets)
+
+@app.route('/sell',methods="post")
+@authenticate
+def sell_post(sell-name,sell-quantity,sell-price,sell-expiration-date)
+    sell_message=sell_tickets(sell-name,sell-quantity,sell-price,sell-expiration-date)
+return sell_message
+
+@app.route('/buy',methods="post")
+@authenticate
+def buy_post(buy-name,buy-quantity)
+    buy_message=buy_tickets(buy-name,buy-quantity)
+return buy_message
+
+@app.route('/update',methods="post")
+@authenticate
+def update_post(update-name,update-quantity,update-price,update-expiration-date)
+    update_message=update_tickets(update-name,update-quantity,update-price,update-expiration-date)
+return update_message
