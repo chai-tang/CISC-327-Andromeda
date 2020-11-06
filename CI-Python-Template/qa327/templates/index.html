@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<h2 id="welcome-header">Welcome {{ user.name }} !</h2>
+<h2 id="welcome_header">Welcome {{ user.name }} !</h2>
 <h2 id="balance">Your balance is: {{ user.balance }} !</h2>
 
 <h2 >Here are all available tickets</h2>
@@ -25,39 +25,39 @@
 <form action="/sell" method="post">
     <div class="form-group">
         <label>Sell</label>
-        <label for="sell-name">Name</label>
-        <input class="form-control" name="sell-name" id="sell-name" required>
-        <label for="sell-quantity">Quantity</label>
-        <input class="form-control" name="sell-quantity" id="sell-quantity" required>
-        <label for="sell-price">Price</label>
-        <input class="form-control" name="sell-price" id="sell-price" required>
-        <label for="sell-expiration-date">Expiration Date</label>
-        <input class="form-control" name="sell-expiration-date" id="sell-expiration-date" required>
-        <input class="btn btn-lg btn-primary" type="submit" id="sell-btn-submit" value="Sell">
+        <label for="sell_name">Name</label>
+        <input class="form-control" name="sell_name" id="sell_name" required>
+        <label for="sell_quantity">Quantity</label>
+        <input class="form-control" name="sell_quantity" id="sell_quantity" required>
+        <label for="sell_price">Price</label>
+        <input class="form-control" name="sell_price" id="sell_price" required>
+        <label for="sell_expiration-date">Expiration Date</label>
+        <input class="form-control" name="sell_expiration_date" id="sell_expiration_date" required>
+        <input class="btn btn-lg btn-primary" type="submit" id="btn-submit" value="Sell">
     </div>
 </form>
 <form action="/buy" method="post">
     <div class="form-group">
         <label>Buy</label>
-        <label for="buy-name">Name</label>
-        <input class="form-control" name="buy-name" id="buy-name" required>
-        <label for="buy-quantity">Quantity</label>
-        <input class="form-control" name="buy-quantity" id="buy-quantity" required>
+        <label for="buy_name">Name</label>
+        <input class="form-control" name="buy_name" id="buy_name" required>
+        <label for="buy_quantity">Quantity</label>
+        <input class="form-control" name="buy_quantity" id="buy_quantity" required>
         <input class="btn btn-lg btn-primary" type="submit" id="btn-submit" value="Buy">
     </div>
 </form>
 <form action="/update" method="post">
     <div class="form-group">
         <label>Update</label>
-        <label for="update-name">Name</label>
-        <input class="form-control" name="update-name" id="update-name" required>
-        <label for="update-quantity">Quantity</label>
-        <input class="form-control" name="update-quantity" id="update-quantity" required>
-        <label for="update-price">Price</label>
-        <input class="form-control" name="update-price" id="update-price" required>
-        <label for="update-expiration-date">Expiration Date</label>
-        <input class="form-control" name="update-expiration-date" id="update-expiration-date" required>
-        <input class="btn btn-lg btn-primary" type="submit" id="update-btn-submit" value="Update">
+        <label for="update_name">Name</label>
+        <input class="form-control" name="update_name" id="update_name" required>
+        <label for="update_quantity">Quantity</label>
+        <input class="form-control" name="update_quantity" id="update_quantity" required>
+        <label for="update_price">Price</label>
+        <input class="form-control" name="update_price" id="update_price" required>
+        <label for="update_expiration-date">Expiration Date</label>
+        <input class="form-control" name="update_expiration_date" id="update_expiration_date" required>
+        <input class="btn btn-lg btn-primary" type="submit" id="btn-submit" value="Update">
     </div>
 </form>
 <a href='/logout'>logout</a>
