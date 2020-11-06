@@ -158,60 +158,38 @@ def profile(user):
     balance=user.balance
     tickets = bn.get_all_tickets()
     
-    sell-name=request.form.get('sell-name')
-    sell-quantity=requeest.form.get('sell-quantity')
-    sell-price=request.form.get('sell-price')
-    sell-expiration-date=request.form.get('sell-expiration-date')
-    sell-error-message=bn.sell_post(sell-name,sell-quantity,sell-price,sell-expiration-date)
-    if sell-error-message!=None:
-        return render_template('/',message=sell-error-message)
-                               
-    buy-name=request.form.get('buy-name')
-    buy-quantity=request.form.get('buy-quantity')
-    buy-error-message=bn.buy_post(buy-name,buy-quantity)
-    if buy-error-message!=None:
-        return render_template('/',message=buy-error-message)
-    
-    update-name=request.form.get('update-name')
-    update-quantity=request.form.get('update-quantity')
-    update-price=request.form.get('update-price')
-    update-expiration-date=request.form.get('update-expiration-date')
-    update-error-message=bn.update_post(update-name,update-quantity,update-price,update-expiration-date)
-    if update-error-message!=None:
-        return render_template('/',message=update-error-message)
-    
     return render_template('index.html', user=user, tickets=tickets)
 
 @app.route('/sell',methods="post")
 @authenticate
 def sell_post():
-    sell-name=request.form.get('sell-name')
-    sell-quantity=requeest.form.get('sell-quantity')
-    sell-price=request.form.get('sell-price')
-    sell-expiration-date=request.form.get('sell-expiration-date')
-    sell-error-message=bn.sell_tickets(sell-name,sell-quantity,sell-price,sell-expiration-date)
-    if sell-error-message!=None:
-        return render_template('/',message=sell-error-message)
+    sell_name=request.form.get('sell_name')
+    sell_quantity=requeest.form.get('sell_quantity')
+    sell_price=request.form.get('sell_price')
+    sell_expiration_date=request.form.get('sell_expiration_date')
+    sell_error_message=bn.sell_tickets(sell_name,sell_quantity,sell_price,sell_expiration_date)
+    if sell_error_message!=None:
+        return render_template('/',message=sell_error_message)
     return render_template('/',message='Tickets added to listing')
 
 @app.route('/buy',methods="post")
 @authenticate
 def buy_post():
-    buy-name=request.form.get('buy-name')
-    buy-quantity=request.form.get('buy-quantity')
-    buy-error-message=bn.buy_tickets(buy-name,buy-quantity)
-    if buy-error-message!=None:
-        return render_template('/',message=buy-error-message)
+    buy_name=request.form.get('buy_name')
+    buy_quantity=request.form.get('buy_quantity')
+    buy_error_message=bn.buy_tickets(buy_name,buy_quantity)
+    if buy_error_message!=None:
+        return render_template('/',message=buy_error_message)
     return render_template('/',message='Tickets purchased')
 
 @app.route('/update',methods="post")
 @authenticate
 def update_post():
-    update-name=request.form.get('update-name')
-    update-quantity=request.form.get('update-quantity')
-    update-price=request.form.get('update-price')
-    update-expiration-date=request.form.get('update-expiration-date')
-    update-error-message=bn.update_tickets(update-name,update-quantity,update-price,update-expiration-date)
-    if update-error-message!=None:
-        return render_template('/',message=update-error-message)
+    update_name=request.form.get('update_name')
+    update_quantity=request.form.get('update_quantity')
+    update_price=request.form.get('update_price')
+    update_expiration_date=request.form.get('update_expiration_date')
+    update_error_message=bn.update_tickets(update_name,update_quantity,update_price,update_expiration_date)
+    if update_error_message!=None:
+        return render_template('/',message=update_error_message)
     return render_template('/',message='Listing updated')
