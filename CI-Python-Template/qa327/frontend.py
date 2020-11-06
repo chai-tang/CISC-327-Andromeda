@@ -160,7 +160,7 @@ def profile(user):
     
     return render_template('index.html', user=user, tickets=tickets)
 
-@app.route('/sell',methods="post")
+@app.route('/sell',methods=['POST'])
 @authenticate
 def sell_post():
     sell_name=request.form.get('sell_name')
@@ -172,7 +172,7 @@ def sell_post():
         return render_template('/',message=sell_error_message)
     return render_template('/',message='Tickets added to listing')
 
-@app.route('/buy',methods="post")
+@app.route('/buy',methods=['POST'])
 @authenticate
 def buy_post():
     buy_name=request.form.get('buy_name')
@@ -182,7 +182,7 @@ def buy_post():
         return render_template('/',message=buy_error_message)
     return render_template('/',message='Tickets purchased')
 
-@app.route('/update',methods="post")
+@app.route('/update',methods=['POST'])
 @authenticate
 def update_post():
     update_name=request.form.get('update_name')
