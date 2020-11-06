@@ -32,7 +32,7 @@ class Ticket(db.Model):
     email = db.Column(db.String(100))
     quantity = db.Column(db.Integer)
     price = db.Column(db.Integer)
-    expiration-date = db.Column(db.Date)
+    expiration_date = db.Column(db.Date)
     
     
 # it creates all the SQL tables if they do not exist
