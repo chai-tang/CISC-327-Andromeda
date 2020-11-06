@@ -184,18 +184,18 @@ def profile(user):
 
 @app.route('/sell',methods="post")
 @authenticate
-def sell_post(sell-name,sell-quantity,sell-price,sell-expiration-date)
+def sell_post(sell-name,sell-quantity,sell-price,sell-expiration-date):
     sell_message=sell_tickets(sell-name,sell-quantity,sell-price,sell-expiration-date)
 return sell_message
 
 @app.route('/buy',methods="post")
 @authenticate
-def buy_post(buy-name,buy-quantity)
+def buy_post(buy-name,buy-quantity):
     buy_message=buy_tickets(buy-name,buy-quantity)
 return buy_message
 
 @app.route('/update',methods="post")
 @authenticate
-def update_post(update-name,update-quantity,update-price,update-expiration-date)
+def update_post(update-name,update-quantity,update-price,update-expiration-date):
     update_message=update_tickets(update-name,update-quantity,update-price,update-expiration-date)
 return update_message
