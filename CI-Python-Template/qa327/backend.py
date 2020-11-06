@@ -61,4 +61,23 @@ def set_balance(email,newBalance):
     return None
 
 def get_all_tickets():
-    return []
+    tickets=Ticket.query.filter(Ticket.expiration-date >=datetime.date.today())
+    return tickets
+
+def sell_tickets(name,quantity,price,expiration-date):
+    """
+    skeleton for /sell post
+    """
+    return None
+
+def buy_tickets(name,quantity):
+    """
+    skeleton for /buy post
+    """
+    return None
+
+def update_tickets(name,quantity,price,expiration-date):
+    """
+    skeleton for /update post
+    """
+    return None
