@@ -154,5 +154,30 @@ def profile(user):
     # by using @authenticate, we don't need to re-write
     # the login checking code all the time for other
     # front-end portals
+    welcome-header='Hi {}'.format(user.name)
+    balance=user.balance
     tickets = bn.get_all_tickets()
+    
+    sell-name=request.form.get('sell-name')
+    sell-quantity=requeest.form.get('sell-quantity')
+    sell-price=request.form.get('sell-price')
+    sell-expiration-date=request.form.get('sell-expiration-date')
+    sell-error-message=bn.sell_tickets(sell-name,sell-quantity,sell-price,sell-expiration-date)
+    if sell-error-message!=None:
+        return render_template('/',message=sell-error-message)
+                               
+    buy-name=request.form.get('buy-name')
+    buy-quantity=request.form.get('buy-quantity')
+    buy-error-message=bn.buy_tickets(buy-name,buy-quantity)
+    if buy-error-message!=None:
+        return render_template('/',message=buy-error-message)
+    
+    update-name=request.form.get('update-name')
+    update-quantity=request.form.get('update-quantity')
+    update-price=request.form.get('update-price')
+    update-expiration-date=request.form.get('update-expiration-date')
+    update-error-message=bn.update_tickets(update-name,update-quantity,update-price,update-expiration-date)
+    if update-error-message!=None:
+        return render_template('/',message=update-error-message)
+    
     return render_template('index.html', user=user, tickets=tickets)
