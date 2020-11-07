@@ -91,7 +91,7 @@ def buy_tickets(name,quantity):
     :return: an error message if there is any, or None if purchase succeeds
     """
     buyticket=Ticket.query.filter_by(name=name).first()
-    buyticket.quantity=buyticket.quantity-quantity
+    buyticket.quantity=buyticket.quantity-int(quantity)
     db.session.commit()
     return None
 
