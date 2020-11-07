@@ -67,6 +67,11 @@ def register_post():
 
 @app.route('/login', methods=['GET'])
 def login_get():
+
+    # if the user is logged in already, redirect to home page
+    if 'logged_in' in session:
+        return redirect('/')
+
     # if a message was passed to this function, display that as message. else, display 'Please login'
     passed_message = request.args.get('message')
     if passed_message == None:
