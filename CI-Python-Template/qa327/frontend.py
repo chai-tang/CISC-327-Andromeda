@@ -227,8 +227,8 @@ def update_post():
         update_quantity=update_ticket.quantity
     if update_price=='':
         update_price=update_ticket.price
-    if update_expiration=='':
-        update_expiration=update_ticket.expiration_date
+    if update_expiration_date=='':
+        update_expiration_date=update_ticket.expiration_date
     if update_ticket.email!=email:
         return render_template('index.html',message='Can only update your own tickets. ', balance=user.balance, tickets=bn.get_all_tickets())
     elif not(quantitypattern.match(update_quantity)):
