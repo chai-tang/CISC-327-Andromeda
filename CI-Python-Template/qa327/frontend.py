@@ -156,6 +156,7 @@ def profile(user):
     # front-end portals
     welcome_header='Hi {}!'.format(user.name)
     balance='{}'.format(user.balance)
+    #balance=balance
     tickets = bn.get_all_tickets()
     
     return render_template('index.html', user=user, tickets=tickets)
