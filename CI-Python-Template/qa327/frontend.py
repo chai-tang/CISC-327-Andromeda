@@ -155,10 +155,9 @@ def profile(user):
     # the login checking code all the time for other
     # front-end portals
     welcome_header='Hi {}!'.format(user.name)
-    balance='{}'.format(user.balance)
     tickets = bn.get_all_tickets()
     
-    return render_template('index.html', user=user, tickets=tickets)
+    return render_template('index.html', welcome_header=welcome_header, user=user, tickets=tickets)
 
 @app.route('/sell',methods=['POST'])
 def sell_post():
@@ -196,13 +195,13 @@ def buy_post():
         return render_template('index.html',message='Ticket quantity must be between 1 and 100')
     elif buyticket.quantity<buy_quantity:
         return render_template('index.html',message='Not enough tickets. ')
-    elif buyticket.price * buy_quantity > balance:
+    elif buyticket.price * buy_quantity > user.balance:
         return render_template('index.html',message='Not enough balance to purchase tickets. ')
     else:
         buy_error_message=bn.buy_tickets(buy_name,buy_quantity)
     if buy_error_message!=None:
         return render_template('index.html',message=buy_error_message)
-    balance-=buyticket.price*buy_quantity
+    user.balance-=buyticket.price*buy_quantity
     return render_template('index.html',message='Tickets purchased')
 
 @app.route('/update',methods=['POST'])
