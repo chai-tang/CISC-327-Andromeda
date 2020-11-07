@@ -187,7 +187,7 @@ def sell_post():
 def buy_post():
     buy_name=request.form.get('buy_name')
     buy_quantity=request.form.get('buy_quantity')
-    buyticket=Ticket.query.filter_by(name=buy_name).first()
+    buyticket=bn.get_all_tickets().query.filter_by(name=buy_name).first()
     quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
     if buyticket==None:
         return render_template('index.html',message='No such ticket {}'.format(buy_ticket))
@@ -210,7 +210,7 @@ def update_post():
     update_quantity=request.form.get('update_quantity')
     update_price=request.form.get('update_price')
     update_expiration_date=request.form.get('update_expiration_date')
-    update_ticket=Ticket.query.filter_by(name=update_name).first()
+    update_ticket=bn.get_all_tickets.query.filter_by(name=update_name).first()
     email=session['logged_in']
     quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
     pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
