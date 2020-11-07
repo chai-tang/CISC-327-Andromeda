@@ -169,7 +169,7 @@ def sell_post():
     namepattern=re.compile("^[a-zA-Z0-9][a-zA-z0-9 ]{0,58}[a-zA-Z0-9]{0,1}")
     quantitypattern=re.compile("([1-9])|([1-9][0-9])|([1][0][0])")
     pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
-    datepattern=re.compile("([2-9][0-9][0-9][0-9])([1-9]|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1])")
+    datepattern=re.compile("([2-9][0-9][0-9][0-9])([1-9]|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1]))")
     if not(namepattern.match(sell_name)):
         return render_template('/',message='Ticket name must be alphanumeric, between 1 and 60 characters, and not start or end with a space. ')
     elif not(quantitypattern.match(sell_quantity)):
@@ -215,7 +215,7 @@ def update_post():
     email=session['logged_in']
     quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
     pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
-    datepattern=re.compile("([2-9][0-9][0-9][0-9])([1-9]|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1])")
+    datepattern=re.compile("([2-9][0-9][0-9][0-9])([1-9]|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1]))")
     if update_ticket==None:
         return render_template('/',message='No such ticket {}. '.format(update_name))
     if update_quantity=='':
