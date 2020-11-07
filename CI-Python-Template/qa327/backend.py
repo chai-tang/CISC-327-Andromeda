@@ -1,5 +1,6 @@
-from qa327.models import db, User
+from qa327.models import db, User, Ticket
 from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
 
 """
 This file defines all backend logic that interacts with database and other services
@@ -61,4 +62,51 @@ def set_balance(email,newBalance):
     return None
 
 def get_all_tickets():
-    return []
+    """
+    Fetch all unexpired tickets
+    :return: a list of all unexpired tickets
+    """
+    tickets=Ticket.query.filter(Ticket.expiration_date >=datetime.date.today().strftime("%Y%m%d"))
+    return tickets
+
+def sell_tickets(name,email,quantity,price,expiration_date):
+    """
+    Add ticket to listing
+    :param name: the name of the ticket
+    :param quantity: the number of tickets to sell
+    :param price: the price of each ticket in dollars
+    :param expiration_date: the day the tickets expire
+    :return: an error message if there is any, or None if ticket listing succeeds
+    """
+    new_ticket=Ticket(name=name,email=email,quantity=quantity,price=price,expiration_date=expiration_date)
+    db.session.add(new_ticket)
+    db.session.commit()
+    return None
+
+def buy_tickets(name,quantity):
+    """
+    Reduce number of an available ticket by an integer
+    :param name: the name of the ticket to purchase
+    :param quantity: the number of tickets to purchase
+    :return: an error message if there is any, or None if purchase succeeds
+    """
+    buyticket=Ticket.query.filter_by(name=name).first()
+    buyticket.quantity=buyticket.quantity-int(quantity)
+    db.session.commit()
+    return None
+
+def update_tickets(name,quantity,price,expiration_date):
+    """
+    Change a listing of a ticket
+    :param name:
+    :param quantity:
+    :param price:
+    :param expiration_date:
+    :return: an error message if there is any, or None if update succeeds
+    """
+    ticket=Ticket.query.filter_by(name=name).first()
+    ticket.quantity=quantity
+    ticket.price=price
+    ticket.expiration_date=expiration_date
+    db.session.commit()
+    return None
