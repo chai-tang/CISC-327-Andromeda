@@ -166,7 +166,20 @@ def sell_post():
     sell_quantity=requeest.form.get('sell_quantity')
     sell_price=request.form.get('sell_price')
     sell_expiration_date=request.form.get('sell_expiration_date')
-    sell_error_message=bn.sell_tickets(sell_name,sell_quantity,sell_price,sell_expiration_date)
+    namepattern=re.compile("^[a-zA-Z0-9][a-zA-z0-9 ]{0,58}[a-zA-Z0-9]{0,1}")
+    quantitypattern=re.compile("([1-9])|([1-9][0-9])|([1][0][0])")
+    pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
+    datepattern=re.compile("([2-9][0-9][0-9][0-9])([1-9]|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1])")
+    if not(namepattern.match(sell_name)):
+        return render_template('/',message='Ticket name must be alphanumeric, between 1 and 60 characters, and not start or end with a space. ')
+    elif not(quantitypattern.match(sell_quantity)):
+        return render_template('/',message='Ticket quantity must be between 1 and 100. ')
+    elif not(pricepattern.match(sell_price)):
+        return render_template('/',message='Ticket price must be between 10 and 100. ')
+    elif not(datepattern.match(expiration_date)):
+        return render_template('/',message='Expiration date must be in form YYYYMMDD. ')
+    else:
+        sell_error_message=bn.sell_tickets(sell_name,session['logged_in'],sell_quantity,sell_price,sell_expiration_date)
     if sell_error_message!=None:
         return render_template('/',message=sell_error_message)
     return render_template('/',message='Tickets added to listing')
@@ -175,9 +188,21 @@ def sell_post():
 def buy_post():
     buy_name=request.form.get('buy_name')
     buy_quantity=request.form.get('buy_quantity')
-    buy_error_message=bn.buy_tickets(buy_name,buy_quantity)
+    buyticket=tickets.query.filter_by(name=buy_name).first()
+    quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
+    if buyticket==None:
+        return render_template('/',message='No such ticket {}'.format(buy_ticket))
+    elif not(quantitypattern.match(buy_quantity)):
+        return render_template('/',message='Ticket quantity must be between 1 and 100')
+    elif buyticket.quantity<buy_quantity:
+        return render_template('/',message='Not enough tickets. ')
+    elif buyticket.price * buy_quantity > balance:
+        return render_template('/',message='Not enough balance to purchase tickets. ')
+    else:
+        buy_error_message=bn.buy_tickets(buy_name,buy_quantity)
     if buy_error_message!=None:
         return render_template('/',message=buy_error_message)
+    balance-=buyticket.price*buy_quantity
     return render_template('/',message='Tickets purchased')
 
 @app.route('/update',methods=['POST'])
@@ -186,7 +211,29 @@ def update_post():
     update_quantity=request.form.get('update_quantity')
     update_price=request.form.get('update_price')
     update_expiration_date=request.form.get('update_expiration_date')
-    update_error_message=bn.update_tickets(update_name,update_quantity,update_price,update_expiration_date)
+    update_ticket=tickets.query.filter_by(name=update_name).first()
+    email=session['logged_in']
+    quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
+    pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
+    datepattern=re.compile("([2-9][0-9][0-9][0-9])([1-9]|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1])")
+    if update_ticket==None:
+        return render_template('/',message='No such ticket {}. '.format(update_name))
+    if update_quantity=='':
+        update_quantity=update_ticket.quantity
+    if update_price=='':
+        update_price=update_ticket.price
+    if update_expiration=='':
+        update_expiration=update_ticket.expiration_date
+    if update_ticket.email!=email:
+        return render_template('/',message='Can only update your own tickets. ')
+    elif not(quantitypattern.match(update_quantity))
+         return render_template('/',message='Quantity must be between 1 and 100')
+    elif not(pricepattern.match(update_price)):
+        return render_template('/',message='Price must be between 10 and 100')
+    elif not(datepattern.match(update_expiration_date)):
+        return render_template('/',message='Expiration date must be in form YYYYMMDD')
+    else:
+        update_error_message=bn.update_tickets(update_name,update_quantity,update_price,update_expiration_date)
     if update_error_message!=None:
         return render_template('/',message=update_error_message)
     return render_template('/',message='Listing updated')
