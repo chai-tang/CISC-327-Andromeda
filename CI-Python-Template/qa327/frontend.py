@@ -155,7 +155,7 @@ def profile(user):
     # the login checking code all the time for other
     # front-end portals
     welcome_header='Hi {}!'.format(user.name)
-    balance=user.balance
+    balance='{}'.format(user.balance)
     tickets = bn.get_all_tickets()
     
     return render_template('index.html', user=user, tickets=tickets)
