@@ -206,6 +206,7 @@ def buy_post():
     if buy_error_message!=None:
         return render_template('index.html',message=buy_error_message, balance=user.balance, tickets=bn.get_all_tickets())
     user.balance-=buyticket.price*int(buy_quantity)
+    bn.set_balance(email,user.balance)
     return render_template('index.html',message='Tickets purchased', balance=user.balance, tickets=bn.get_all_tickets())
 
 @app.route('/update',methods=['POST'])
