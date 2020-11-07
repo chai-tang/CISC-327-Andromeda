@@ -66,7 +66,7 @@ def get_all_tickets():
     Fetch all unexpired tickets
     :return: a list of all unexpired tickets
     """
-    tickets=Ticket.query.filter(Ticket.expiration_date >=datetime.date.today())
+    tickets=Ticket.query.filter(Ticket.expiration_date >=datetime.date.today().strftime("%Y%m%d"))
     return tickets
 
 def sell_tickets(name,email,quantity,price,expiration_date):
