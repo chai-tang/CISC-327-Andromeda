@@ -54,4 +54,40 @@ A design document in PDF or perferablly the markdown format for your project, gi
   - Responsibility (who is responsible for which test case, and in case of failure, who should you contact)
   - Budget Management (you have limited CI action minutes, how to monitor, keep track and minimize unncessary cost)
 
--insert detailed test plan here-
+**Test Case Organization**
+
+- Test cases are organized within the qa327_test folder of the template, which is itself sorted into a number of subfolders
+- Each level of testing (frontend, backend, and integration) will have its own folder
+- Each folder  will contain a number of testing files for testing specific parts of the project relevant to that level
+
+**Order of Test Cases**
+
+1. Frontend (mocking backend)
+2. Backend
+3. Integration
+
+**Tools & Techniques**
+
+- Github Actions 
+- Pytest
+
+**Environments**
+
+- Local environments: Tests done with servers run locally on each teammate's personal computer
+- Github "cloud" environment: Tests done on the Github servers using Github actions. Will primarily use their Linux actions services.
+
+**Responsibility**
+
+- R1 & R2: Joshua 
+- R3 & R4: Evan 
+- R5 & R6: Alina
+- R7 & R8: Sam
+
+**Budget Management**
+
+- Actions will be done only when a pull request is reviewed by another teammate
+- All pull requests (and subsequent Github actions testing) thus MUST be reviewed by at least one other teammate before merging
+- These reviews will include checking how many minutes are left for the given period, and evaluating how much of that time can be spared
+- Avoiding making too many minor pull requests when possible, prioritizing the use of fewer but larger pulls.
+- Primarily using Linux minutes to maximize time efficiency 
+- $0 spending limit on actions to prevent going over allocated time limits

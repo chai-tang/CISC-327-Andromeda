@@ -7,7 +7,7 @@ import re
 This file defines the front-end part of the service.
 It elaborates how the services should handle different
 http requests from the client (browser) through templating.
-The html templates are stored in the 'templates' folder. 
+The html templates are stored in the 'templates' folder.
 """
 
 
@@ -58,7 +58,7 @@ def register_post():
             login_message = "Registration successful, please login now"
             if bn.set_balance(email,5000) != None:
                 login_message = "Registration successful, but failed to set new balance"
-    
+
     # return to login with the appropriate message
     #return render_template('login.html', message=login_message)
     #return redirect('/login')
@@ -67,6 +67,11 @@ def register_post():
 
 @app.route('/login', methods=['GET'])
 def login_get():
+
+    # if the user is logged in already, redirect to home page
+    if 'logged_in' in session:
+        return redirect('/')
+
     # if a message was passed to this function, display that as message. else, display 'Please login'
     passed_message = request.args.get('message')
     if passed_message == None:
@@ -82,9 +87,9 @@ def login_post():
     if user:
         session['logged_in'] = user.email
         """
-        Session is an object that contains sharing information 
-        between browser and the end server. Typically it is encrypted 
-        and stored in the browser cookies. They will be past 
+        Session is an object that contains sharing information
+        between browser and the end server. Typically it is encrypted
+        and stored in the browser cookies. They will be past
         along between every request the browser made to this services.
 
         Here we store the user object into the session, so we can tell
@@ -109,14 +114,14 @@ def login_post():
 def logout():
     if 'logged_in' in session:
         session.pop('logged_in', None)
-    return redirect('/')
+    return redirect('/', code=303)
 
 
 def authenticate(inner_function):
     """
     :param inner_function: any python function that accepts a user object
 
-    Wrap any python function and check the current session to see if 
+    Wrap any python function and check the current session to see if
     the user has logged in. If login, it will call the inner_function
     with the logged in user object.
 
@@ -140,7 +145,7 @@ def authenticate(inner_function):
                 return inner_function(user)
         else:
             # else, redirect to the login page
-            return redirect('/login')
+            return redirect('/login', code=303)
 
     # return the wrapped version of the inner_function:
     return wrapped_inner
@@ -156,9 +161,15 @@ def profile(user):
     # front-end portals
     welcome_header='Hi {}!'.format(user.name)
     tickets = bn.get_all_tickets()
-    
+ 
     return render_template('index.html', welcome_header=welcome_header, user=user, balance=user.balance, tickets=tickets)
 
+
+@app.errorhandler(404)
+def other_requests(error):
+    # returns a 404 error for any other requests
+    return render_template('404.html', message='404 ERROR: The requested URL was not found on the server.'), 404
+    
 @app.route('/sell',methods=['POST'])
 def sell_post():
     sell_name=request.form.get('sell_name')
@@ -242,3 +253,4 @@ def update_post():
     if update_error_message!=None:
         return render_template('index.html',message=update_error_message, balance=user.balance, tickets=bn.get_all_tickets())
     return render_template('index.html',message='Listing updated', balance=user.balance, tickets=bn.get_all_tickets())
+
