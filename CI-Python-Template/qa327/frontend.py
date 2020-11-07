@@ -226,7 +226,7 @@ def update_post():
         update_expiration=update_ticket.expiration_date
     if update_ticket.email!=email:
         return render_template('/',message='Can only update your own tickets. ')
-    elif not(quantitypattern.match(update_quantity))
+    elif not(quantitypattern.match(update_quantity)):
          return render_template('/',message='Quantity must be between 1 and 100')
     elif not(pricepattern.match(update_price)):
         return render_template('/',message='Price must be between 10 and 100')
