@@ -215,7 +215,7 @@ def update_post():
     update_quantity=request.form.get('update_quantity')
     update_price=request.form.get('update_price')
     update_expiration_date=request.form.get('update_expiration_date')
-    update_ticket=bn.get_all_tickets.filter_by(name=update_name).first()
+    update_ticket=bn.get_all_tickets().filter_by(name=update_name).first()
     email=session['logged_in']
     user=bn.get_user(email)
     quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
