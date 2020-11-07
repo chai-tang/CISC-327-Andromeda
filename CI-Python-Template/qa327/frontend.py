@@ -157,7 +157,7 @@ def profile(user):
     welcome_header='Hi {}!'.format(user.name)
     tickets = bn.get_all_tickets()
     
-    return render_template('index.html', welcome_header=welcome_header, user=user, tickets=tickets)
+    return render_template('index.html', welcome_header=welcome_header, user=user, balance=user.balance, tickets=tickets)
 
 @app.route('/sell',methods=['POST'])
 def sell_post():
