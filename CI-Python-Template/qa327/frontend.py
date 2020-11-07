@@ -176,7 +176,7 @@ def sell_post():
         return render_template('/',message='Ticket quantity must be between 1 and 100. ')
     elif not(pricepattern.match(sell_price)):
         return render_template('/',message='Ticket price must be between 10 and 100. ')
-    elif not(datepattern.match(expiration_date)):
+    elif not(datepattern.match(sell_expiration_date)):
         return render_template('/',message='Expiration date must be in form YYYYMMDD. ')
     else:
         sell_error_message=bn.sell_tickets(sell_name,session['logged_in'],sell_quantity,sell_price,sell_expiration_date)
