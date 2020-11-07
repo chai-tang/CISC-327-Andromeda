@@ -163,7 +163,7 @@ def profile(user):
 @app.route('/sell',methods=['POST'])
 def sell_post():
     sell_name=request.form.get('sell_name')
-    sell_quantity=requeest.form.get('sell_quantity')
+    sell_quantity=request.form.get('sell_quantity')
     sell_price=request.form.get('sell_price')
     sell_expiration_date=request.form.get('sell_expiration_date')
     namepattern=re.compile("^[a-zA-Z0-9][a-zA-z0-9 ]{0,58}[a-zA-Z0-9]{0,1}")
