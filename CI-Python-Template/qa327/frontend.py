@@ -193,9 +193,9 @@ def buy_post():
         return render_template('index.html',message='No such ticket {}'.format(buy_ticket))
     elif not(quantitypattern.match(buy_quantity)):
         return render_template('index.html',message='Ticket quantity must be between 1 and 100')
-    elif buyticket.quantity<buy_quantity:
+    elif buyticket.quantity<int(buy_quantity):
         return render_template('index.html',message='Not enough tickets. ')
-    elif buyticket.price * buy_quantity > user.balance:
+    elif buyticket.price * int(buy_quantity) > user.balance:
         return render_template('index.html',message='Not enough balance to purchase tickets. ')
     else:
         buy_error_message=bn.buy_tickets(buy_name,buy_quantity)
