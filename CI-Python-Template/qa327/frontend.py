@@ -156,8 +156,16 @@ def profile(user):
     # front-end portals
     welcome_header='Hi {}!'.format(user.name)
     tickets = bn.get_all_tickets()
+ 
+    return render_template('index.html', user=user, tickets=tickets)
+
+
+@app.errorhandler(404)
+def other_requests(error):
+    # returns a 404 error for any other requests
+    return render_template('404.html', message='404 ERROR: The requested URL was not found on the server.'), 404
     
-    return render_template('index.html', welcome_header=welcome_header, user=user, balance=user.balance, tickets=tickets)
+    #return render_template('index.html', welcome_header=welcome_header, user=user, balance=user.balance, tickets=tickets)
 
 @app.route('/sell',methods=['POST'])
 def sell_post():
@@ -242,3 +250,4 @@ def update_post():
     if update_error_message!=None:
         return render_template('index.html',message=update_error_message, balance=user.balance, tickets=bn.get_all_tickets())
     return render_template('index.html',message='Listing updated', balance=user.balance, tickets=bn.get_all_tickets())
+
