@@ -162,7 +162,7 @@ def profile(user):
     welcome_header='Hi {}!'.format(user.name)
     tickets = bn.get_all_tickets()
  
-    return render_template('index.html', user=user, tickets=tickets)
+    return render_template('index.html', welcome_header=welcome_header, user=user, balance=user.balance, tickets=tickets)
 
 
 @app.errorhandler(404)
@@ -170,8 +170,6 @@ def other_requests(error):
     # returns a 404 error for any other requests
     return render_template('404.html', message='404 ERROR: The requested URL was not found on the server.'), 404
     
-    #return render_template('index.html', welcome_header=welcome_header, user=user, balance=user.balance, tickets=tickets)
-
 @app.route('/sell',methods=['POST'])
 def sell_post():
     sell_name=request.form.get('sell_name')
