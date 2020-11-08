@@ -18,6 +18,7 @@ A design document in PDF or perferablly the markdown format for your project, gi
 |sell_post         	|Handles POST method for /sell. Adds new tickets with the backend using form inputs. Checks for errors in input formatting and listing process.|
 |buy_post          	|Handles POST method for /buy. Reduces number of available tickets and user balance using form inputs. Checks for errors in input formatting and ticket purchase process.|
 |update_post        |Handles POST method for /update. Changes the parameters of any ticket the user is selling. Checks for errors in input formatting relisting process.|
+|other_requests     |Handles any other invalid requests by returning a 404 error.|
 
 **Backend Methods**
 
