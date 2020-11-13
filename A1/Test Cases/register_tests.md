@@ -4,8 +4,8 @@ Test Data:
 ```
 test_user = User(
     email='test_frontend@test.com',
-    name='Test_Frontend99!',
-    password=generate_password_hash('test_frontend')
+    name='Test_Frontend99',
+    password=generate_password_hash('123ABCxyz*')
 )
 
 test_tickets = [
