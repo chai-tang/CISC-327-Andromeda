@@ -38,3 +38,4 @@ Please indicate the status of local testing. If your code did not pass all tests
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] All my changes adhere to the project specifications / requirements
+- [ ] These changes are significant enough to justify the use of Github Actions minutes
