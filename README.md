@@ -1,6 +1,6 @@
 # CISC-327-Andromeda-Project
 
-[![](https://github.com/60556238/CISC-327-Andromeda/workflows/Andromeda%20SeekGeek-Build/badge.svg)]()
+[![](https://github.com/chai-tang/CISC-327-Andromeda/workflows/AndromedaSeekGeek-Build/badge.svg)]()
 
 Repository for our CISC 327 course project. Group24.
 
