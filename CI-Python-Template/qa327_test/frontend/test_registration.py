@@ -43,15 +43,13 @@ invalid_emails = [
     'has\\backslash@test.com',
     'has"double"quotes@test.com',
     'wacky)(brackets@test.com',
-    '%special&chars#!*^$@gmail.com',
     'veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylongemail@test.com',
     '@test.com',
     'nodomain.com',
     ' ',
-    'local@domain',
     'local@-hyphens-.com',
     'local@$special#chars!%^&*.com',
-    'local@unscore_domain.com',
+    'local@_unscoredomain_.com',
     'local@veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylongdomain.com',
     'local@'
 ]
@@ -135,7 +133,7 @@ class FrontEndRegistrationTest(BaseCase):
         self.open(base_url + '/register')
         # validate that we have been redirected to homepage
         current_url = self.driver.current_url
-        self.assert_equal(current_url,base_url)
+        self.assert_equal(current_url,base_url+'/')
 
     @patch('qa327.backend.register_user', return_value=None)    
     def test_register_exists(self, *_):
