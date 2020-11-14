@@ -11,7 +11,7 @@ Fixes issue #(issue)
 - [ ] Refactoring (or other minor edits)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 
-# Specifications
+## Specifications
 
 Please indicate which part of the specifications these changes are relevant to.
 
@@ -27,7 +27,7 @@ Please indicate which part of the specifications these changes are relevant to.
 - [ ] Frontend
 - [ ] Backend
 
-# Testing status
+## Testing status
 
 Please indicate the status of local testing. If your code did not pass all tests locally, justify why these changes should be merged.
 
