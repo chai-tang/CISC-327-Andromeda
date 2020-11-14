@@ -4,7 +4,7 @@
 
 Repository for our CISC 327 course project. Group24.
 
-# Current Focus: Assignment 2
+# Current Focus: Assignment 3
 
 A3: https://github.com/CISC-CMPE-327/Information/blob/master/Project/A3_web.md
 
