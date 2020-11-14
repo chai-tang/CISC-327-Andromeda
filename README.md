@@ -1,9 +1,12 @@
 # CISC-327-Andromeda-Project
+
+[![](https://github.com/chai-tang/CISC-327-Andromeda/workflows/AndromedaSeekGeek-Build/badge.svg)]()
+
 Repository for our CISC 327 course project. Group24.
 
-# Current Focus: Assignment 2
+# Current Focus: Assignment 3
 
-A2: https://github.com/CISC-CMPE-327/Information/blob/master/Project/A2_web.md
+A3: https://github.com/CISC-CMPE-327/Information/blob/master/Project/A3_web.md
 
 Project Specifications: https://github.com/CISC-CMPE-327/Information/blob/master/Project/Specification-Web.md
 

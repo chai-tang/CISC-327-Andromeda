@@ -1,6 +1,12 @@
-name: Python application
+name: AndromedaSeekGeek-Build
 
-on: [push]
+on: 
+   push:
+    branches:
+      - master
+   pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -15,6 +21,7 @@ jobs:
         python-version: 3.7
     - name: Install dependencies
       run: |
+        cd CI-Python-Template
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         seleniumbase install chromedriver latest
