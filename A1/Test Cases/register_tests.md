@@ -3,8 +3,8 @@
 Test Data:
 ```
 test_user = User(
-    email='test_frontend@test.com',
-    name='Test_Frontend99',
+    email='valid_email@test.com',
+    name='validuser',
     password=generate_password_hash('123ABCxyz*')
 )
 

@@ -205,7 +205,7 @@ def buy_post():
     email=session['logged_in']
     user=bn.get_user(email)
     if buyticket==None:
-        return render_template('index.html',message='No such ticket {}'.format(buy_ticket), balance=user.balance, tickets=bn.get_all_tickets())
+        return render_template('index.html',message='No such ticket {}'.format(buyticket), balance=user.balance, tickets=bn.get_all_tickets())
     elif not(quantitypattern.match(buy_quantity)):
         return render_template('index.html',message='Ticket quantity must be between 1 and 100',balance=user.balance, tickets=bn.get_all_tickets())
     elif buyticket.quantity<int(buy_quantity):
