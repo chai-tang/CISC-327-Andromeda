@@ -183,7 +183,7 @@ class FrontEndIndexTest(BaseCase):
         #verify that the current page has a sell form
         self.assert_text('Sell','form action="/sell">div>label',timeout=default_timeout)
         #verify that the sell form has a name field
-        self.assert_element('#sell_name",timeout=default_timeout)
+        self.assert_element('#sell_name',timeout=default_timeout)
         #verify that the sell form has a quantity field
         self.assert_element('#sell_quantity',timeout=default_timeout)
         #verify that the sell form has a price field
@@ -233,7 +233,7 @@ class FrontEndIndexTest(BaseCase):
         #verify that the current page has a buy form
         self.assert_text('Buy','form action="/buy">div>label',timeout=default_timeout)
         #verify that the buy form has a name field
-        self.assert_element('#buy_name",timeout=default_timeout)
+        self.assert_element('#buy_name',timeout=default_timeout)
         #verify that the buy form has a quantity field
         self.assert_element('#buy_quantity',timeout=default_timeout)
         #verify that the buy form can be posted to /buy
@@ -278,7 +278,7 @@ class FrontEndIndexTest(BaseCase):
         #verify that the current page has an update form
         self.assert_text('Update','form action="/update">div>label',timeout=default_timeout)
         #verify that the update form has a name field
-        self.assert_element('#update_name",timeout=default_timeout)
+        self.assert_element('#update_name',timeout=default_timeout)
         #verify that the update form has a quantity field
         self.assert_element('#update_quantity',timeout=default_timeout)
         #verify that the update form has a price field
