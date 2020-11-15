@@ -24,7 +24,7 @@ Annotate @patch before unit tests can mock backend methods (for that testing fun
 test_user = User(
     email='valid_email@test.com',
     name='validuser',
-    password=generate_password_hash('123ABCxyz*')
+    password=generate_password_hash('123ABCxyz*'),
     balance=2000
 )
 
