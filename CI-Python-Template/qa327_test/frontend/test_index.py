@@ -63,8 +63,8 @@ class FrontEndIndexTest(BaseCase):
         current_url = self.driver.current_url
         self.assert_equal(current_url,base_url+'/login')
         
-    @patch('qa327.backend.get_user', return_value='test_user')
-    @patch('qa327.backend.login_user', return_value='test_user')
+    @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.login_user', return_value=test_user)
     def test_homepage_contents(self, *_):
         """
         ***Test R3.2-4 This page shows a Header 'Hi {}'.format(user.name), This page shows user balance., This page shows a logout link, pointing to /logout***
@@ -96,21 +96,24 @@ class FrontEndIndexTest(BaseCase):
         self.type("#password",'123ABCxyz*')
         #click submit button
         self.click('input[type="submit"]')
+        #validate that we have been redirected to /
+        current_url = self.driver.current_url
+        self.assert_equal(current_url,base_url+'/')
         #validate that the current page contains a #welcome_header element
         self.assert_element('#welcome_header',timeout=default_timeout)
         #validate that the #welcome_header element contains the text 'Hi validuser'
-        self.assert_text('Hi validuser','id=welcome_header',timeout=default_timeout)
+        self.assert_text('Hi validuser','#welcome_header',timeout=default_timeout)
         #validate that the current page contains a #balance element
         self.assert_element('#balance',timeout=default_timeout)
         #validate that the #balance element contains the text 'Your balance is: 2000!'
-        self.assert_text('Your balance is: 2000!','id=balance',timeout=default_timeout)
+        self.assert_text('Your balance is: 2000!','#balance',timeout=default_timeout)
         #validate that the current page contains a logout link
-        self.assert_element('href=/logout',timeout=default_timeout)
-        self.assert_text('logout','href=/logout',timeout=default_timeout)
+        self.assert_element('#logout_link',timeout=default_timeout)
+        self.assert_text('logout','#logout_link',timeout=default_timeout)
         
-    @patch('qa327.backend.get_user', return_value='test_user')
-    @patch('qa327.backend.login_user', return_value='test_user')
-    @patch('qa327.backend.get_all_tickets', return_value='test_ticket')
+    @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.login_user', return_value=test_user)
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
     def test_homepage_tickets(self, *_):
         """
         ***Test Case R3.5 This page lists all available tickets. Information including the quantity of each ticket, the owner's email, and the price, for tickets that are not expired.***
@@ -140,14 +143,17 @@ class FrontEndIndexTest(BaseCase):
         self.type("#password",'123ABCxyz*')
         #click submit button
         self.click('input[type="submit"]')
+        #validate that we have been redirected to /
+        current_url = self.driver.current_url
+        self.assert_equal(current_url,base_url+'/')
         #validate that the current page contains a #tickets element
         self.assert_element('#tickets',timeout=default_timeout)
         #validate that the #tickets element contains the text 'ticketname 50 valid_email@test.com 45'
-        self.assert_text('ticketname 50 valid_email@test.com 45','id=tickets',timeout=default_timeout)
+        self.assert_text('ticketname 50 valid_email@test.com 45','#tickets',timeout=default_timeout)
         
-    @patch('qa327.backend.get_user', return_value='test_user')
-    @patch('qa327.backend.login_user', return_value='test_user')
-    @patch('qa327.backend.get_all_tickets', return_value='test_ticket')
+    @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.login_user', return_value=test_user)
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
     def test_homepage_sell_form(self, *_):
         """
         ***R3.6,9 The page contains a form that a user can submit new tickets for sell. Fields: name, quantity, price, expiration date, The ticket-selling form can be posted to /sell***
@@ -181,8 +187,11 @@ class FrontEndIndexTest(BaseCase):
         self.type("#password",'123ABCxyz*')
         #click submit button
         self.click('input[type="submit"]')
+        #validate that we have been redirected to /
+        current_url = self.driver.current_url
+        self.assert_equal(current_url,base_url+'/')
         #verify that the current page has a sell form
-        self.assert_text('Sell','form action="/sell">div>label',timeout=default_timeout)
+        self.assert_element('#sell_tickets_form',timeout=default_timeout)
         #verify that the sell form has a name field
         self.assert_element('#sell_name',timeout=default_timeout)
         #verify that the sell form has a quantity field
@@ -192,14 +201,16 @@ class FrontEndIndexTest(BaseCase):
         #verify that the sell form has an expiration date field
         self.assert_element('#sell_expiration_date',timeout=default_timeout)
         #verify that the sell form can be posted to /sell
-        self.assert_element('form action="/sell" method="post"',timeout=default_timeout)
-        
+        sell_action=self.get_attribute('#sell_tickets_form',"action",timeout=default_timeout)
+        self.assert_equal(sell_action,base_url+'/sell')
+        sell_method=self.get_attribute('#sell_tickets_form',"method",timeout=default_timeout)
+        self.assert_equal(sell_method,'post')
    
         
         
-    @patch('qa327.backend.get_user', return_value='test_user')
-    @patch('qa327.backend.login_user', return_value='test_user')
-    @patch('qa327.backend.get_all_tickets', return_value='test_ticket')
+    @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.login_user', return_value=test_user)
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
     def test_homepage_buy_form(self, *_):
         """
         ***R3.7,10 The page contains a form that a user can buy new tickets. Fields: name, quantity, The ticket-buying form can be posted to /buy***
@@ -231,18 +242,24 @@ class FrontEndIndexTest(BaseCase):
         self.type("#password",'123ABCxyz*')
         #click submit button
         self.click('input[type="submit"]')
+        #validate that we have been redirected to /
+        current_url = self.driver.current_url
+        self.assert_equal(current_url,base_url+'/')
         #verify that the current page has a buy form
-        self.assert_text('Buy','form action="/buy">div>label',timeout=default_timeout)
+        self.assert_element('#buy_tickets_form',timeout=default_timeout)
         #verify that the buy form has a name field
         self.assert_element('#buy_name',timeout=default_timeout)
         #verify that the buy form has a quantity field
         self.assert_element('#buy_quantity',timeout=default_timeout)
         #verify that the buy form can be posted to /buy
-        self.assert_element('form action="/buy" method="post"',timeout=default_timeout)
+        buy_action=self.get_attribute('#buy_tickets_form',"action",timeout=default_timeout)
+        self.assert_equal(buy_action,base_url+'/buy')
+        buy_method=self.get_attribute('#buy_tickets_form',"method",timeout=default_timeout)
+        self.assert_equal(buy_method,'post')
         
-    @patch('qa327.backend.get_user', return_value='test_user')
-    @patch('qa327.backend.login_user', return_value='test_user')
-    @patch('qa327.backend.get_all_tickets', return_value='test_ticket')
+    @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.login_user', return_value=test_user)
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
     def test_homepage_update_form(self, *_):
         """
         ***R3.8,11 The page contains a form that a user can update existing tickets. Fields: name, quantity, price, expiration date, The ticket-update form can be posted to /update***
@@ -276,8 +293,11 @@ class FrontEndIndexTest(BaseCase):
         self.type("#password",'123ABCxyz*')
         #click submit button
         self.click('input[type="submit"]')
+        #validate that we have been redirected to /
+        current_url = self.driver.current_url
+        self.assert_equal(current_url,base_url+'/')
         #verify that the current page has an update form
-        self.assert_text('Update','form action="/update">div>label',timeout=default_timeout)
+        self.assert_element('#update_tickets_form',timeout=default_timeout)
         #verify that the update form has a name field
         self.assert_element('#update_name',timeout=default_timeout)
         #verify that the update form has a quantity field
@@ -287,6 +307,9 @@ class FrontEndIndexTest(BaseCase):
         #verify that the update form has an expiration date field
         self.assert_element('#update_expiration_date',timeout=default_timeout)
         #verify that the update form can be posted to /update
-        self.assert_element('form action="/update" method="post"',timeout=default_timeout)
+        update_action=self.get_attribute('#update_tickets_form',"action",timeout=default_timeout)
+        self.assert_equal(update_action,base_url+'/update')
+        update_method=self.get_attribute('#update_tickets_form',"method",timeout=default_timeout)
+        self.assert_equal(update_method,'post')
         
         
