@@ -11,9 +11,13 @@ Summary of all changes made to test cases / test data since assignment 1 submiss
 |R2.7 & R2.8|Validate username inputs in /register|Merged 2.7 and 2.8 into one test case|The R2.7 test data for invalid usernames already included names of invalid length, so having a separate test case for R2.8 was redundant.|
 |R2.1-11|Testing /register|Adding mocking for backend.register_user to every test case|These are just frontend tests, so user registration should be mocked. This also means that new users don't have to be removed from the database.|
 |R2.11|Validate that new users can be registered|Removed testing for login and balance. Adding mocking for backend.set_balance|This case is only supposed to test the /register frontend, so the part that tries to login and check the balance was well outside the intended scope of this test case. That will be covered in backend testing.|
-|                  	|                      	|                  	|            	|
-|                  	|                      	|                  	|            	|
-|                  	|                      	|                  	|            	|
+|R3.1-11|Testing /|Added mocking for backend.get_user, backend.login_user, and backend.get_all_tickets.|Frontend testing should mock backend.|
+|R3.2-4             |Validate welcome header, balance and logout link in /                      	|Added id attribute to balance and logout link                  	| Allows for easier css selector use.           	|
+|R3.5               |Validate tickets display in /                   	|Added id attribute to tickets display div.                  	|Allows for easier css selector use.            	|
+|R3.6 & R3.9        |Validate ticket selling form in /                  	| Added id attribute to ticket selling form.                 	|Allows for easier css selector use.            	|
+|R3.7 & R3.10|Validate ticket buying form  in /|Added id attribute to ticket buying form |Allows for easier css selector use.|
+|R3.8 & R3.11|Validate ticket update form in /|Added id attribute to ticket update form|Allows for easier css selector use.|
+|					|						   |					  |						 |
 
 ## Section 2: Test Case Failures
 
@@ -41,9 +45,9 @@ Documentation for every test case that failed, and the resulting fixes made:
 
 | Test Case Number 	| Purpose of Test Case 	| Cause of Failure 	| Fixes Made 	|
 |------------------	|----------------------	|------------------	|------------	|
-|                  	|                      	|                  	|            	|
-|                  	|                      	|                  	|            	|
-|                  	|                      	|                  	|            	|
+|R3.2-4             |Validate welcome header, balance display and logout link.|Improper css selector.            	|Added id attributes for easier css selector use.|
+|R3.5               |Validate the tickets display.|Improper css selector.                  	|Added id attribute for easier css selector use.            	|
+|R3.6-11                  	|Validate the ticket selling, ticket buying, and ticket update forms.                      	|Improper css selectors.                  	|Added id attributes for easier css selector use.            	|
 
 ### R7 Logout Tests:
 
