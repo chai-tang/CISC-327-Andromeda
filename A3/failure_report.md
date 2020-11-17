@@ -17,7 +17,9 @@ Summary of all changes made to test cases / test data since assignment 1 submiss
 |R3.6 & R3.9        |Validate ticket selling form in /                  	| Added id attribute to ticket selling form.                 	|Allows for easier css selector use.            	|
 |R3.7 & R3.10|Validate ticket buying form  in /|Added id attribute to ticket buying form |Allows for easier css selector use.|
 |R3.8 & R3.11|Validate ticket update form in /|Added id attribute to ticket update form|Allows for easier css selector use.|
-|					|						   |					  |						 |
+|R8|For any other requests, the system should return a 404 error|Removed the following actions: The user visits a valid path in valid_paths, The page should go to the corresponding path. If a redirection is needed, the page should redirect to the page needed|Unnecessary; functionality and redirection of valid paths are tested in previous test cases.|
+|R8|For any other requests, the system should return a 404 error|Removed the following actions: The user visits an invalid path in invalid_paths_special. Depending on the server configuration, the browser might receive an HTTP 403 and it's okay|Unnecessary; browser will not receive an HTTP 403 request.|
+|R8|For any other requests, the system should return a 404 error|Added a few more invalid paths to test.|To test paths that are almost valid paths but still invalid, not simply random characters.|
 
 ## Section 2: Test Case Failures
 
@@ -61,7 +63,5 @@ Documentation for every test case that failed, and the resulting fixes made:
 
 | Test Case Number 	| Purpose of Test Case 	| Cause of Failure 	| Fixes Made 	|
 |------------------	|----------------------	|------------------	|------------	|
-|                  	|                      	|                  	|            	|
-|                  	|                      	|                  	|            	|
-|                  	|                      	|                  	|            	|
+|R8|Validate that error message is displayed and 404 error is returned.|No failures.|No fixes made.|
 
