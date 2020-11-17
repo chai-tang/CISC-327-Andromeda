@@ -237,7 +237,7 @@ def update_post():
     user=bn.get_user(email)
     quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
     pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
-    datepattern=re.compile("([2-9][0-9][0-9][0-9])([1-9]|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1]))")
+    datepattern=re.compile("([2-9][0-9][0-9][0-9])(([0][1-9])|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1]))")
     if update_ticket==None:
         return render_template('index.html',message='No such ticket {}. '.format(update_name), balance=user.balance, tickets=bn.get_all_tickets())
     if update_quantity=='':
