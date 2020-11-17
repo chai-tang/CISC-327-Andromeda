@@ -52,9 +52,7 @@ Documentation for every test case that failed, and the resulting fixes made:
 
 | Test Case Number 	| Purpose of Test Case 	| Cause of Failure 	| Fixes Made 	|
 |------------------	|----------------------	|------------------	|------------	|
-|                  	|                      	|                  	|            	|
-|                  	|                      	|                  	|            	|
-|                  	|                      	|                  	|            	|
+| R7.2 | Make sure that the restricted pages are inaccessible, and user should not be able to buy, sell or update tickets. | It is still possible to buy, sell or update tickets even when the user is not logged in	| Add extra check to make sure if the user is not logged in, he cannot buy, sell or update tickets |
 
 ### R8 /* Tests:
 
@@ -63,4 +61,3 @@ Documentation for every test case that failed, and the resulting fixes made:
 |                  	|                      	|                  	|            	|
 |                  	|                      	|                  	|            	|
 |                  	|                      	|                  	|            	|
-
