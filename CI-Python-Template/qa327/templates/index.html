@@ -19,7 +19,7 @@
 {% endfor %}
 </div>
 
-<form action="/sell" method="post">
+<form id="sell_tickets_form" action="/sell" method="post">
     <div class="form-group">
         <label>Sell</label>
         <label for="sell_name">Name</label>
@@ -33,7 +33,7 @@
         <input class="btn btn-lg btn-primary" type="submit" id="btn-submit" value="Sell">
     </div>
 </form>
-<form action="/buy" method="post">
+<form id="buy_tickets_form" action="/buy" method="post">
     <div class="form-group">
         <label>Buy</label>
         <label for="buy_name">Name</label>
@@ -43,7 +43,7 @@
         <input class="btn btn-lg btn-primary" type="submit" id="btn-submit" value="Buy">
     </div>
 </form>
-<form action="/update" method="post">
+<form id="update_tickets_form" action="/update" method="post">
     <div class="form-group">
         <label>Update</label>
         <label for="update_name">Name</label>
@@ -57,5 +57,5 @@
         <input class="btn btn-lg btn-primary" type="submit" id="btn-submit" value="Update">
     </div>
 </form>
-<a href='/logout'>logout</a>
+<a id="logout_link" href='/logout'>logout</a>
 {% endblock %}
