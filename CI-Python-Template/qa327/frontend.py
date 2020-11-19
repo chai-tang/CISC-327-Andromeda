@@ -2,6 +2,7 @@ from flask import render_template, request, session, redirect, url_for
 from qa327 import app
 import qa327.backend as bn
 import re
+import datetime
 
 """
 This file defines the front-end part of the service.
@@ -167,8 +168,12 @@ def profile(user):
     # the login checking code all the time for other
     # front-end portals
     welcome_header='Hi {}!'.format(user.name)
-    tickets = bn.get_all_tickets()
-
+    alltickets = bn.get_all_tickets()
+    currdate=int(datetime.datetime.now().strftime("%Y%m%d"))
+    tickets=[]
+    for ticket in alltickets:
+        if ticket.expiration_date>currdate:
+            tickets.append(ticket)
     return render_template('index.html', welcome_header=welcome_header, user=user, balance=user.balance, tickets=tickets)
 
 
@@ -250,7 +255,7 @@ def update_post():
     user=bn.get_user(email)
     quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
     pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
-    datepattern=re.compile("([2-9][0-9][0-9][0-9])([1-9]|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1]))")
+    datepattern=re.compile("([2-9][0-9][0-9][0-9])(([0][1-9])|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1]))")
     if update_ticket==None:
         return render_template('index.html',message='No such ticket {}. '.format(update_name), balance=user.balance, tickets=bn.get_all_tickets())
     if update_quantity=='':
