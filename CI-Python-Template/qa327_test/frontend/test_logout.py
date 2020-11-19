@@ -44,5 +44,6 @@ class FrontEndHomePageTest(BaseCase):
         self.open(base_url + "/logout")
         # open login page again
         self.open(base_url + "/login")
+        current_url = self.driver.current_url
         self.assert_equal(current_url, base_url+"/login")
         self.assert_text("Please login", "#message")
