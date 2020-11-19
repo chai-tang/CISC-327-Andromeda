@@ -16,7 +16,7 @@ def register_get():
 
     # if the user is logged in already, redirect to home page
     if 'logged_in' in session:
-        return redirect('/')
+        return redirect('/', code=303)
 
     # templates are stored in the templates folder
     return render_template('register.html', message='Please register')
@@ -76,7 +76,7 @@ def login_get():
 
     # if the user is logged in already, redirect to home page
     if 'logged_in' in session:
-        return redirect('/')
+        return redirect('/', code=303)
 
     # if a message was passed to this function, display that as message. else, display 'Please login'
     passed_message = request.args.get('message')
@@ -108,15 +108,16 @@ def login_post():
     else:
         passwordPattern = re.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*([!-/]|[:-@])).{6,}")
         emailPattern = re.compile("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])")
+        lengthPattern = re.compile("^.{1,63}$")
         if (not(passwordPattern.match(password))):
             return render_template('login.html', message='password format incorrect')
-        elif (not(emailPattern.match(email))):
+        elif not(emailPattern.match(email)) or not(lengthPattern.match(email)):
             return render_template('login.html', message='email format incorrect')
         else:
             return render_template('login.html', message='email/password combination incorrect')
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET'])
 def logout():
     if 'logged_in' in session:
         session.pop('logged_in', None)
@@ -167,7 +168,7 @@ def profile(user):
     # front-end portals
     welcome_header='Hi {}!'.format(user.name)
     tickets = bn.get_all_tickets()
- 
+
     return render_template('index.html', welcome_header=welcome_header, user=user, balance=user.balance, tickets=tickets)
 
 
@@ -175,9 +176,13 @@ def profile(user):
 def other_requests(error):
     # returns a 404 error for any other requests
     return render_template('404.html', message='404 ERROR: The requested URL was not found on the server.'), 404
-    
+
 @app.route('/sell',methods=['POST'])
 def sell_post():
+    # Always check if the user is logged in
+    if 'logged_in' not in session:
+        return redirect('/login', code=303)
+
     sell_name=request.form.get('sell_name')
     sell_quantity=request.form.get('sell_quantity')
     sell_price=request.form.get('sell_price')
@@ -204,6 +209,10 @@ def sell_post():
 
 @app.route('/buy',methods=['POST'])
 def buy_post():
+    # Always check if the user is logged in
+    if 'logged_in' not in session:
+        return redirect('/login', code=303)
+
     buy_name=request.form.get('buy_name')
     buy_quantity=request.form.get('buy_quantity')
     buyticket=bn.get_all_tickets().filter_by(name=buy_name).first()
@@ -228,6 +237,10 @@ def buy_post():
 
 @app.route('/update',methods=['POST'])
 def update_post():
+    # Always check if the user is logged in
+    if 'logged_in' not in session:
+        return redirect('/login', code=303)
+
     update_name=request.form.get('update_name')
     update_quantity=request.form.get('update_quantity')
     update_price=request.form.get('update_price')
@@ -259,4 +272,3 @@ def update_post():
     if update_error_message!=None:
         return render_template('index.html',message=update_error_message, balance=user.balance, tickets=bn.get_all_tickets())
     return render_template('index.html',message='Listing updated', balance=user.balance, tickets=bn.get_all_tickets())
-
