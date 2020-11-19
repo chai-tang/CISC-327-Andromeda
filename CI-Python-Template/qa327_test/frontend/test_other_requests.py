@@ -1,10 +1,14 @@
 import pytest
 import requests
 from seleniumbase import BaseCase
-#cd onedrive/desktop/cisc327/CISC* 
 
 from qa327_test.conftest import base_url
 
+"""
+This file defines all unit tests for other(invalid) requests.
+"""
+
+# some test data:
 invalid_paths = [
     '/asdfasdfasdfdasdf',
     '/%20',
@@ -15,7 +19,7 @@ invalid_paths = [
 
 default_timeout=1
 
-class FrontEndIndexTest(BaseCase):
+class FrontEndOtherRequestsTest(BaseCase):
 
     def test_other_requests(self, *_):
         """
@@ -32,7 +36,7 @@ class FrontEndIndexTest(BaseCase):
         
         """
         
-        # visit ever invalid path in 'invalid_paths'
+        # visit every invalid path in 'invalid_paths'
         for path in invalid_paths:
              # open invalid path
             self.open(base_url + path)
@@ -40,12 +44,13 @@ class FrontEndIndexTest(BaseCase):
             self.assert_element("#message", timeout=default_timeout)
             self.assert_text("404 ERROR: The requested URL was not found on the server.", "#message", timeout=default_timeout)
 
-        # visit ever invalid path in 'invalid_paths'
+        # close opened window
+        self.driver.close()
+
+        # visit every invalid path in 'invalid_paths'
         for path in invalid_paths:
             # validate that browser received a HTTP 404 response
             r = requests.get(base_url + path)
-            #self.assert_equal(r.status_code, 404, response.status_code)
-            # or
             assert r.status_code == 404
         
         # it only works when they are in seperate for loops, not sure why
