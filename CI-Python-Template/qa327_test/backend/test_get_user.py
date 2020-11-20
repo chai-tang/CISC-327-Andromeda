@@ -54,5 +54,8 @@ class BackendMethodTest(BaseCase):
         assert get_user(new_email) != None
 
         #must remove this user from db.sqlite in order to run test again
+        new_user = User.query.filter_by(email=new_email).first()
+        db.session.delete(new_user)
+        db.session.commit()
         
 
