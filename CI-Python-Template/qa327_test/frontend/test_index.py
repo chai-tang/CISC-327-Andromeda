@@ -38,6 +38,15 @@ test_ticket = Ticket(
     expiration_date=20221231
 )
 
+# Mock an expired ticket
+expired_ticket = Ticket(
+    name='expiredticket',
+    email='valid_email@test.com',
+    quantity=50,
+    price=55,
+    expiration_date=20000101
+)
+
 default_timeout=1
 
 class FrontEndIndexTest(BaseCase):
@@ -113,7 +122,7 @@ class FrontEndIndexTest(BaseCase):
         
     @patch('qa327.backend.get_user', return_value=test_user)
     @patch('qa327.backend.login_user', return_value=test_user)
-    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket,expired_ticket])
     def test_homepage_tickets(self, *_):
         """
         ***Test Case R3.5 This page lists all available tickets. Information including the quantity of each ticket, the owner's email, and the price, for tickets that are not expired.***
@@ -121,7 +130,7 @@ class FrontEndIndexTest(BaseCase):
         Mocking:
         - Mock backend.get_user to return a test_user instance
         - Mock backend.login_user to return a test_user instance
-        - Mock backend.get_all_tickets to return a test_ticket instance
+        - Mock backend.get_all_tickets to return a test_ticket instance and an expired_ticket instance
         
         Actions:
         - open /logout (to invalidate any logged-in sessions that may exist)
@@ -131,6 +140,7 @@ class FrontEndIndexTest(BaseCase):
         - click element input[type="submit"]
         - validate that the current page contains a #tickets element
         - validate that the #tickets element contains the text 'ticketname 50 valid_email@test.com 45'
+        - validate that the #tickets element does not contain the text 'expiredticket 50 valid_email.test.com 55'
         
         """
         #open /logout
@@ -150,6 +160,8 @@ class FrontEndIndexTest(BaseCase):
         self.assert_element('#tickets',timeout=default_timeout)
         #validate that the #tickets element contains the text 'ticketname 50 valid_email@test.com 45'
         self.assert_text('ticketname 50 valid_email@test.com 45','#tickets',timeout=default_timeout)
+        #validate that the #tickets element does not contain the text 'expiredticket 50 valid_email@test.com 55'
+        self.assert_text_not_visible('expiredticket 50 valid_email@test.com 55','#tickets',timeout=default_timeout)
         
     @patch('qa327.backend.get_user', return_value=test_user)
     @patch('qa327.backend.login_user', return_value=test_user)
