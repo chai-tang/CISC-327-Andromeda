@@ -88,9 +88,15 @@ def login_get():
 
 @app.route('/login', methods=['POST'])
 def login_post():
+
+    # get the user's form inputs
     email = request.form.get('email')
     password = request.form.get('password')
+    # attempt to login with those user credentials
     user = bn.login_user(email, password)
+
+    # if bn.login_user succeeds, add that user's email to the session (as 'logged_in')
+    # then redirect them to the homepage
     if user:
         session['logged_in'] = user.email
         """
@@ -106,22 +112,33 @@ def login_post():
         # success! go back to the home page
         # code 303 is to force a 'GET' request
         return redirect('/', code=303)
+
+    # if login failed, check what the error was and display an appropriate error message
     else:
+        # use these regex's to validate that the user's form inputs match the required format
         passwordPattern = re.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*([!-/]|[:-@])).{6,}")
         emailPattern = re.compile("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)*|\[((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|IPv6:((((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){6}|::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){5}|[0-9A-Fa-f]{0,4}::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){4}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):)?(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){3}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,2}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){2}|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,3}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,4}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,5}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3})|(((0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}):){0,6}(0|[1-9A-Fa-f][0-9A-Fa-f]{0,3}))?::)|(?!IPv6:)[0-9A-Za-z-]*[0-9A-Za-z]:[!-Z^-~]+)])")
         lengthPattern = re.compile("^.{1,63}$")
+        # if there was a formatting issue, display which form wasn't accepted
         if (not(passwordPattern.match(password))):
             return render_template('login.html', message='password format incorrect')
         elif not(emailPattern.match(email)) or not(lengthPattern.match(email)):
             return render_template('login.html', message='email format incorrect')
+
+        # for any others issues, assume that the given email and password did not match that of an existing account
         else:
             return render_template('login.html', message='email/password combination incorrect')
 
 
 @app.route('/logout', methods=['GET'])
 def logout():
+    # check if there is a user currently logged_in in this session
+    # if there is, set 'logged_in' to None to log them out
     if 'logged_in' in session:
         session.pop('logged_in', None)
+
+    # always redirect to homepage
+    # since the user is logged out at this point, this should immediately redirect to /login
     return redirect('/', code=303)
 
 
@@ -188,16 +205,23 @@ def sell_post():
     if 'logged_in' not in session:
         return redirect('/login', code=303)
 
+    # get the ticket information from the user's form inputs
     sell_name=request.form.get('sell_name')
     sell_quantity=request.form.get('sell_quantity')
     sell_price=request.form.get('sell_price')
     sell_expiration_date=request.form.get('sell_expiration_date')
+    # get the currently logged in user
     email=session['logged_in']
     user=bn.get_user(email)
+
+    # some regex's to validate the inputs
     namepattern=re.compile("^[a-zA-Z0-9][a-zA-z0-9 ]{0,58}[a-zA-Z0-9]{0,1}")
     quantitypattern=re.compile("([1-9])|([1-9][0-9])|([1][0][0])")
     pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
     datepattern=re.compile("([2-9][0-9][0-9][0-9])(([0][1-9])|([1][0-2]))(([0][1-9])|([1-2][0-9])|([3][0-1]))")
+
+    # use the regex's to validate that the ticket info is in acceptable format
+    # display appropriate error messages for any formatting errors
     if not(namepattern.match(sell_name)):
         return render_template('index.html',message='Ticket name must be alphanumeric, between 1 and 60 characters, and not start or end with a space. ', balance=user.balance, tickets=bn.get_all_tickets())
     elif not(quantitypattern.match(sell_quantity)):
@@ -206,10 +230,14 @@ def sell_post():
         return render_template('index.html',message='Ticket price must be between 10 and 100. ', balance=user.balance, tickets=bn.get_all_tickets())
     elif not(datepattern.match(sell_expiration_date)):
         return render_template('index.html',message='Expiration date must be in form YYYYMMDD. ', balance=user.balance, tickets=bn.get_all_tickets())
+    
+    # if the inputs are formatted correctly, attempt to sell the ticket
     else:
         sell_error_message=bn.sell_tickets(sell_name,session['logged_in'],sell_quantity,sell_price,sell_expiration_date)
+    # if bn.sell_tickets fails, display the error message it returns
     if sell_error_message!=None:
         return render_template('index.html',message=sell_error_message, balance=user.balance, tickets=bn.get_all_tickets())
+    # else, display that the ticket has successfully been posted
     return render_template('index.html',message='Tickets added to listing', balance=user.balance, tickets=bn.get_all_tickets())
 
 @app.route('/buy',methods=['POST'])
@@ -218,12 +246,20 @@ def buy_post():
     if 'logged_in' not in session:
         return redirect('/login', code=303)
 
+    # get the ticket information from the user's form inputs
     buy_name=request.form.get('buy_name')
     buy_quantity=request.form.get('buy_quantity')
+    # attempt to retrieve the tickets with that name from backend
     buyticket=bn.get_all_tickets().filter_by(name=buy_name).first()
+
+    # a regex to validate the user's quantity form input
     quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
+
+    # get the currently logged in user
     email=session['logged_in']
     user=bn.get_user(email)
+
+    # if the tickets could not be retrieved, display an appropriate error message
     if buyticket==None:
         return render_template('index.html',message='No such ticket {}'.format(buyticket), balance=user.balance, tickets=bn.get_all_tickets())
     elif not(quantitypattern.match(buy_quantity)):
@@ -232,12 +268,18 @@ def buy_post():
         return render_template('index.html',message='Not enough tickets. ', balance=user.balance, tickets=bn.get_all_tickets())
     elif buyticket.price * int(buy_quantity) > user.balance:
         return render_template('index.html',message='Not enough balance to purchase tickets. ', balance=user.balance, tickets=bn.get_all_tickets())
+    
+    # if the tickets were successfully retrieved, attempt to buy the tickets
     else:
         buy_error_message=bn.buy_tickets(buy_name,buy_quantity)
+    # if bn.buy_tickets fails, display the error message it returns
     if buy_error_message!=None:
         return render_template('index.html',message=buy_error_message, balance=user.balance, tickets=bn.get_all_tickets())
+    # else, update the user's balance based on the price of the tickets purchased
     user.balance-=buyticket.price*int(buy_quantity)
     bn.set_balance(email,user.balance)
+
+    # display that the tickets have succesfully been purchased
     return render_template('index.html',message='Tickets purchased', balance=user.balance, tickets=bn.get_all_tickets())
 
 @app.route('/update',methods=['POST'])
@@ -246,34 +288,55 @@ def update_post():
     if 'logged_in' not in session:
         return redirect('/login', code=303)
 
+    # get the ticket information from the user's form inputs
     update_name=request.form.get('update_name')
     update_quantity=request.form.get('update_quantity')
     update_price=request.form.get('update_price')
     update_expiration_date=request.form.get('update_expiration_date')
+    # attempt to retrieve the user's desired tickets
     update_ticket=bn.get_all_tickets().filter_by(name=update_name).first()
+
+    # get the currently logged in user
     email=session['logged_in']
     user=bn.get_user(email)
+
+    # some regex's to validate the user's form inputs
     quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
     pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
     datepattern=re.compile("([2-9][0-9][0-9][0-9])(([0][1-9])|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1]))")
+
+    # if the tickets could not be retrieved, display an appropriate error message
     if update_ticket==None:
         return render_template('index.html',message='No such ticket {}. '.format(update_name), balance=user.balance, tickets=bn.get_all_tickets())
+    
+    # if the tickets were successfully retrieved, attempt to update said tickets
+
+    # if the user left any non-required forms blank, assume that those values will stay the same
     if update_quantity=='':
         update_quantity=update_ticket.quantity
     if update_price=='':
         update_price=update_ticket.price
     if update_expiration_date=='':
         update_expiration_date=update_ticket.expiration_date
+
+    # check that the user is the owner of the tickets they want to update, and return an error message if they aren't
     if update_ticket.email!=email:
         return render_template('index.html',message='Can only update your own tickets. ', balance=user.balance, tickets=bn.get_all_tickets())
+    
+    # use the regex's to validate that their form inputs match the required format
+    # if they don't, display the appropriate error message
     elif not(quantitypattern.match(update_quantity)):
          return render_template('index.html',message='Quantity must be between 1 and 100', balance=user.balance, tickets=bn.get_all_tickets())
     elif not(pricepattern.match(update_price)):
         return render_template('index.html',message='Price must be between 10 and 100', balance=user.balance, tickets=bn.get_all_tickets())
     elif not(datepattern.match(update_expiration_date)):
         return render_template('index.html',message='Expiration date must be in form YYYYMMDD', balance=user.balance, tickets=bn.get_all_tickets())
+    
+    # if no errors have occurred thus far, attempt to update the tickets
     else:
         update_error_message=bn.update_tickets(update_name,update_quantity,update_price,update_expiration_date)
+    # if bn.update_tickets fails, display the error message it returns
     if update_error_message!=None:
         return render_template('index.html',message=update_error_message, balance=user.balance, tickets=bn.get_all_tickets())
+    # else, display that the tickets have been succesfully updated
     return render_template('index.html',message='Listing updated', balance=user.balance, tickets=bn.get_all_tickets())

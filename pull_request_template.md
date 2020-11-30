@@ -10,6 +10,7 @@ Fixes issue #(issue)
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] Refactoring (or other minor edits)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Documentation (or any other non-code related changes)
 
 ## Specifications
 

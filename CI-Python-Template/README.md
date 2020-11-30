@@ -1,6 +1,4 @@
-# This is the template we will be modifying for Assignment 2. 
-
-Additionally, the design_document.md is where we'll be putting our design document and test plan
+# This is the template we will be modifying for further Assignments. 
 
 Here's the original template README:
 
