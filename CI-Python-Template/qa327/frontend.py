@@ -3,6 +3,7 @@ from qa327 import app
 import qa327.backend as bn
 import re
 import datetime
+import sys
 
 """
 This file defines the front-end part of the service.
@@ -215,9 +216,9 @@ def sell_post():
     user=bn.get_user(email)
 
     # some regex's to validate the inputs
-    namepattern=re.compile("^[a-zA-Z0-9][a-zA-z0-9 ]{0,58}[a-zA-Z0-9]{0,1}")
-    quantitypattern=re.compile("([1-9])|([1-9][0-9])|([1][0][0])")
-    pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
+    namepattern=re.compile("^[a-zA-Z0-9][a-zA-z0-9 ]{0,58}[a-zA-Z0-9]$")
+    quantitypattern=re.compile("^(100|[1-9][0-9]?)$")
+    pricepattern=re.compile("(100)|(^[1-9][0-9]$)")
     datepattern=re.compile("([2-9][0-9][0-9][0-9])(([0][1-9])|([1][0-2]))(([0][1-9])|([1-2][0-9])|([3][0-1]))")
 
     # use the regex's to validate that the ticket info is in acceptable format
@@ -250,20 +251,30 @@ def buy_post():
     buy_name=request.form.get('buy_name')
     buy_quantity=request.form.get('buy_quantity')
     # attempt to retrieve the tickets with that name from backend
-    buyticket=bn.get_all_tickets().filter_by(name=buy_name).first()
+    buyticket = None
+    all_tickets = bn.get_all_tickets()
+    for ticket in all_tickets:
+        if ticket.name == buy_name:
+            buyticket = ticket
+    #buyticket=bn.get_all_tickets().filter_by(name=buy_name).first()
 
-    # a regex to validate the user's quantity form input
-    quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
+    # regex's to validate the user's form input
+    namepattern=re.compile("^[a-zA-Z0-9][a-zA-z0-9 ]{0,58}[a-zA-Z0-9]$")
+    quantitypattern=re.compile("^(100|[1-9][0-9]?)$")
 
     # get the currently logged in user
     email=session['logged_in']
     user=bn.get_user(email)
 
-    # if the tickets could not be retrieved, display an appropriate error message
-    if buyticket==None:
-        return render_template('index.html',message='No such ticket {}'.format(buyticket), balance=user.balance, tickets=bn.get_all_tickets())
+    # validate the inputs
+    if not(namepattern.match(buy_name)):
+         return render_template('index.html',message='Ticket name must be alphanumeric, between 1 and 60 characters, and not start or end with a space.', balance=user.balance, tickets=bn.get_all_tickets()) 
     elif not(quantitypattern.match(buy_quantity)):
         return render_template('index.html',message='Ticket quantity must be between 1 and 100',balance=user.balance, tickets=bn.get_all_tickets())
+
+    # if the tickets could not be retrieved, display an appropriate error message
+    if buyticket==None:
+        return render_template('index.html',message='No such ticket {}'.format(buy_name), balance=user.balance, tickets=bn.get_all_tickets())
     elif buyticket.quantity<int(buy_quantity):
         return render_template('index.html',message='Not enough tickets. ', balance=user.balance, tickets=bn.get_all_tickets())
     elif buyticket.price * int(buy_quantity) > user.balance:
@@ -293,17 +304,35 @@ def update_post():
     update_quantity=request.form.get('update_quantity')
     update_price=request.form.get('update_price')
     update_expiration_date=request.form.get('update_expiration_date')
-    # attempt to retrieve the user's desired tickets
-    update_ticket=bn.get_all_tickets().filter_by(name=update_name).first()
 
     # get the currently logged in user
     email=session['logged_in']
     user=bn.get_user(email)
 
     # some regex's to validate the user's form inputs
-    quantitypattern=re.compile("[1-9]|([1-9][0-9])|([1][0][0])")
-    pricepattern=re.compile("([1-9][0-9])|([1][0][0])")
-    datepattern=re.compile("([2-9][0-9][0-9][0-9])(([0][1-9])|([1][0-2]))([1-9]|([1-2][0-9])|([3][0-1]))")
+    namepattern=re.compile("^[a-zA-Z0-9][a-zA-z0-9 ]{0,58}[a-zA-Z0-9]$")
+    quantitypattern=re.compile("^(100|[1-9][0-9]?)$")
+    pricepattern=re.compile("(100)|(^[1-9][0-9]$)")
+    datepattern=re.compile("([2-9][0-9][0-9][0-9])(([0][1-9])|([1][0-2]))(([0][1-9])|([1-2][0-9])|([3][0-1]))")
+
+    # use the regex's to validate that their form inputs match the required format
+    # if they don't, display the appropriate error message
+    if not(namepattern.match(update_name)):
+         return render_template('index.html',message='Ticket name must be alphanumeric, between 1 and 60 characters, and not start or end with a space.', balance=user.balance, tickets=bn.get_all_tickets()) 
+    elif not(quantitypattern.match(update_quantity)):
+         return render_template('index.html',message='Quantity must be between 1 and 100', balance=user.balance, tickets=bn.get_all_tickets())
+    elif not(pricepattern.match(update_price)):
+        return render_template('index.html',message='Price must be between 10 and 100', balance=user.balance, tickets=bn.get_all_tickets())
+    elif not(datepattern.match(update_expiration_date)):
+        return render_template('index.html',message='Expiration date must be in form YYYYMMDD', balance=user.balance, tickets=bn.get_all_tickets())
+
+    # attempt to retrieve the user's desired tickets
+    update_ticket = None
+    all_tickets = bn.get_all_tickets()
+    for ticket in all_tickets:
+        if ticket.name == update_name:
+            update_ticket = ticket
+    #update_ticket=bn.get_all_tickets().filter_by(name=update_name).first()
 
     # if the tickets could not be retrieved, display an appropriate error message
     if update_ticket==None:
@@ -322,15 +351,6 @@ def update_post():
     # check that the user is the owner of the tickets they want to update, and return an error message if they aren't
     if update_ticket.email!=email:
         return render_template('index.html',message='Can only update your own tickets. ', balance=user.balance, tickets=bn.get_all_tickets())
-    
-    # use the regex's to validate that their form inputs match the required format
-    # if they don't, display the appropriate error message
-    elif not(quantitypattern.match(update_quantity)):
-         return render_template('index.html',message='Quantity must be between 1 and 100', balance=user.balance, tickets=bn.get_all_tickets())
-    elif not(pricepattern.match(update_price)):
-        return render_template('index.html',message='Price must be between 10 and 100', balance=user.balance, tickets=bn.get_all_tickets())
-    elif not(datepattern.match(update_expiration_date)):
-        return render_template('index.html',message='Expiration date must be in form YYYYMMDD', balance=user.balance, tickets=bn.get_all_tickets())
     
     # if no errors have occurred thus far, attempt to update the tickets
     else:

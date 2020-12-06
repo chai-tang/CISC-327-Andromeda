@@ -14,7 +14,7 @@
 <div id="tickets">
 {% for ticket in tickets %}
     <div>
-        <h4>{{ ticket.name }} {{ticket.quantity}} {{ticket.email}} {{ ticket.price }}</h4>
+        <h4 class="ticket">{{ ticket.name }} {{ticket.quantity}} {{ticket.email}} {{ ticket.price }}</h4>
     </div>
 {% endfor %}
 </div>
@@ -30,7 +30,7 @@
         <input class="form-control" name="sell_price" id="sell_price" required>
         <label for="sell_expiration-date">Expiration Date</label>
         <input class="form-control" name="sell_expiration_date" id="sell_expiration_date" required>
-        <input class="btn btn-lg btn-primary" type="submit" id="btn-submit" value="Sell">
+        <input class="btn btn-lg btn-primary" type="submit" id="sell-submit" value="Sell">
     </div>
 </form>
 <form id="buy_tickets_form" action="/buy" method="post">
@@ -40,7 +40,7 @@
         <input class="form-control" name="buy_name" id="buy_name" required>
         <label for="buy_quantity">Quantity</label>
         <input class="form-control" name="buy_quantity" id="buy_quantity" required>
-        <input class="btn btn-lg btn-primary" type="submit" id="btn-submit" value="Buy">
+        <input class="btn btn-lg btn-primary" type="submit" id="buy-submit" value="Buy">
     </div>
 </form>
 <form id="update_tickets_form" action="/update" method="post">
@@ -54,7 +54,7 @@
         <input class="form-control" name="update_price" id="update_price">
         <label for="update_expiration-date">Expiration Date</label>
         <input class="form-control" name="update_expiration_date" id="update_expiration_date" >
-        <input class="btn btn-lg btn-primary" type="submit" id="btn-submit" value="Update">
+        <input class="btn btn-lg btn-primary" type="submit" id="update-submit" value="Update">
     </div>
 </form>
 <a id="logout_link" href='/logout'>logout</a>
