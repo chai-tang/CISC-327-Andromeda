@@ -40,3 +40,8 @@ Documentation for every test case that failed, and the resulting fixes made:
 |R6.1|Validating that ticket names must be alphanumeric|The buy method in frontend has no name validation|Added name validation using regex, same as in /sell. Also made input validation occur earlier in this method.|
 |R6.4|Validating that ticket name must exist to be purchased|"No such ticket __" message did not display the name of the desired ticket after a failed purchase|Fixed the error message to properply display the buy_name when said ticket could not be found|
 |R6.4-5|Validating that tickets must exist / be affordable by user to be purchased|Mocking get_all_tickets() threw a number of errors due to /buy implementation in frontend|Changed the way that /buy finds the desired tickets in frontend. See the "A5 setup" pull request for details.|
+
+### Integration Tests:
+
+| Test Case Number | Purpose of Test Case | Cause of Failure | Fixes Made |
+|R6.X|Testing ticket purchase|Directly adding tickets to the database caused an exception. |Repeated the sell process to add desired test ticket before buying said ticket. |
