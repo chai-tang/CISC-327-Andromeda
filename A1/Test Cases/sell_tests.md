@@ -57,7 +57,7 @@ Actions:
 - click element input[type="submit"]
 - repeat above steps for each invalid and valid name
 
-**Test Case R4.2 - The name of the ticket must be no longer than 60 characters
+**Test Case R4.2 - The name of the ticket must be no longer than 60 characters**
 Mocking:
 - Mock backend.get_user to return a test_user instance
 - Mock backend.get_tickets to return a list of all available tickets

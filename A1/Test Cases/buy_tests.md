@@ -42,7 +42,7 @@ invalid_quantities = [
 
 ```
 
-**Test Case R5.1 - The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character**
+**Test Case R6.1 - The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character**
 
 Mocking:
 
@@ -63,7 +63,7 @@ Actions:
 - repeat with each valid name 
 - validate that it does not cause an error
 
-**Test Case R5.2 - The name of the ticket is no longer than 60 characters**
+**Test Case R6.2 - The name of the ticket is no longer than 60 characters**
 
 Mocking:
 
@@ -82,7 +82,7 @@ Actions:
 - click element input[type="submit"]
 - validate that it does not cause an error
 
-**Test Case R5.3 - The quantity of the tickets has to be more than 0, and less than or equal to 100**
+**Test Case R6.3 - The quantity of the tickets has to be more than 0, and less than or equal to 100**
 
 Mocking:
 
@@ -103,7 +103,7 @@ Actions:
 - repeat with each valid quantity
 - validate that it does not cause an error
 
-**Test Case R5.4 - The ticket name exists in the database and the quantity is more than the quantity requested to buy**
+**Test Case R6.4 - The ticket name exists in the database and the quantity is more than the quantity requested to buy**
 
 Mocking:
 
@@ -126,7 +126,7 @@ Actions:
 - click element input[type="submit"]
 - validate that it does not cause an error
 
-**Test Case R5.5 - The user has more balance than the ticket price * quantity + service fee (35%) + tax (5%)**
+**Test Case R6.5 - The user has more balance than the ticket price * quantity + service fee (35%) + tax (5%)**
 
 Mocking:
 
@@ -141,7 +141,7 @@ Actions:
 - click element input[type="submit"]
 - validate that the user balance is greater than the ticket price * quantity + service fee (35%) + tax (5%)
 
-**Test Case R5.6 - For any errors, redirect back to / and show an error message**
+**Test Case R6.6 - For any errors, redirect back to / and show an error message**
 
 Mocking:
 

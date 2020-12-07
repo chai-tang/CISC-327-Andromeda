@@ -1,5 +1,6 @@
 import pytest
 from seleniumbase import BaseCase
+from qa327.models import db, User
 
 from qa327_test.conftest import base_url
 
@@ -11,25 +12,35 @@ from qa327_test.conftest import base_url
 class Registered(BaseCase):
 
     def register(self):
-        """register new user"""
+        """Register a new user"""
         self.open(base_url + '/register')
-        self.type("#email", "test0")
-        self.type("#name", "test0")
-        self.type("#password", "test0")
-        self.type("#password2", "test0")
+        self.type("#email", "testregisterint@email")
+        self.type("#name", "tester")
+        self.type("#password", "qqQQ!!")
+        self.type("#password2", "qqQQ!!")
         self.click('input[type="submit"]')
 
     def login(self):
-        """ Login to Swag Labs and verify that login was successful. """
+        """Login with test user credentials"""
         self.open(base_url + '/login')
-        self.type("#email", "test0")
-        self.type("#password", "test0")
+        self.type("#email", "testregisterint@email")
+        self.type("#password", "qqQQ!!")
         self.click('input[type="submit"]')
 
+    def logout(self):
+        """Logout the user"""
+        self.open(base_url+'/logout')
+
     def test_register_login(self):
-        """ This test checks the implemented login/logout feature """
+        """Test registration, login and logout, then delete the user"""
         self.register()
         self.login()
         self.open(base_url)
-        #self.assert_element("#welcome-header")
-        #self.assert_text("Welcome test0", "#welcome-header")
+        self.assert_element("#welcome_header")
+        self.logout()
+        current_url = self.driver.current_url
+        self.assert_equal(current_url,base_url+'/login')
+
+        new_user = User.query.filter_by(email="testregisterint@email").first()
+        db.session.delete(new_user)
+        db.session.commit()
