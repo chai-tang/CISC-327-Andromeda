@@ -31,3 +31,4 @@ zipp
 
 flask-pytest
 seleniumbase
+pymysql
