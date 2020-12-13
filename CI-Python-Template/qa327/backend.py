@@ -42,7 +42,11 @@ def register_user(email, name, password, password2):
     """
 
     hashed_pw = generate_password_hash(password, method='sha256')
-    # store the encrypted password rather than the plain password
+    hashed_pw2 = generate_password_hash(password2, method='sha256')
+    # Check if the hashed passwords match
+    if hashed_pw != hashed_pw2:
+        return "Passwords does not match"
+    # Store the encrypted password rather than the plain password
     new_user = User(email=email, name=name, password=hashed_pw, balance=0)
 
     db.session.add(new_user)
@@ -57,6 +61,8 @@ def set_balance(email,newBalance):
     :return: an error message if there is any, or None if balance changes succeed
     """
     user = get_user(email)
+    if newBalance < 0:
+        return "Cannot set balance to less than zero"
     user.balance = newBalance
     db.session.commit()
     return None
