@@ -54,7 +54,7 @@ class BackendMethodTest(BaseCase):
         # submit the forms
         self.click('input[type="submit"]')
 
-        # validate that get_user() does return a user now that new_email belongs to a user
+        # Validate get_user(). One should return a user. The other should return None
         assert get_user(valid_email) is not None
         assert get_user(invalid_email) is None
 
