@@ -1,7 +1,7 @@
 version: "2"
 services:
   seetgeek-web:
-    image: your_company/seetgeek
+    image: chaitang/cisc-327-andromeda:v6
     depends_on:
       - seetgeek-db
     links:
