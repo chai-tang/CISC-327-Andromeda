@@ -40,12 +40,9 @@ def register_user(email, name, password, password2):
     :param password2: another password input to make sure the input is correct
     :return: an error message if there is any, or None if register succeeds
     """
-
-    hashed_pw = generate_password_hash(password, method='sha256')
-    hashed_pw2 = generate_password_hash(password2, method='sha256')
-    # Check if the hashed passwords match
-    if hashed_pw != hashed_pw2:
+    if (password != password2):
         return "Passwords does not match"
+    hashed_pw = generate_password_hash(password, method='sha256')
     # Store the encrypted password rather than the plain password
     new_user = User(email=email, name=name, password=hashed_pw, balance=0)
 

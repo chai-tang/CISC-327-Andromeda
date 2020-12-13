@@ -5,4 +5,4 @@
 | Input email | Test Case | Expected Output |
 | ----------- | --------- | --------------- |
 | not_a_user@test.com | Input an invalid email | Returns None |
-| test_user@test.com | Input a existing email | Returns that User |
+| test_user@test.com | Input an existing email | Returns that User |
