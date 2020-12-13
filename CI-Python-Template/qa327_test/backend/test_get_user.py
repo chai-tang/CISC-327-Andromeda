@@ -55,7 +55,7 @@ class BackendMethodTest(BaseCase):
         self.click('input[type="submit"]')
 
         # validate that get_user() does return a user now that new_email belongs to a user
-        assert get_user(valid_email) == User.query.filter_by(email=valid_email).first()
+        assert get_user(valid_email) != None
         assert get_user(invalid_email) == None
 
         #must remove this user from db.sqlite in order to run test again
