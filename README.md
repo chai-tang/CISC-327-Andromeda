@@ -2,7 +2,7 @@
 
 [![](https://github.com/chai-tang/CISC-327-Andromeda/workflows/AndromedaSeekGeek-Build/badge.svg)]()
 
-Repository for our CISC 327 course project. Group24.
+Primary repository for our CISC-327 Software Quality Assurance project. See the links below for details.
 
 # Current Focus: Assignment 5
 
